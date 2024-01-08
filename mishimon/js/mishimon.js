@@ -1,5 +1,6 @@
 let ataqueJugador 
 let ataqueEnemigo
+let resultado
 
 function iniciarJuego() {
     let botonMascotaJugador = document.getElementById("boton-mascota")
@@ -22,13 +23,13 @@ function seleccionarMascotaJugador(){
     let spanMascotaJugador = document.getElementById("mascota-jugador")
 
    if (inputGrowmon.checked){
-    spanMascotaJugador.innerHTML = "Growmon"
+    spanMascotaJugador.innerHTML = "GROWMON"
    }
    else if (inputFiremon.checked){
-    spanMascotaJugador.innerHTML = "Firemon"
+    spanMascotaJugador.innerHTML = "FIREMON"
    }
    else if (inputWaltermon.checked){
-    spanMascotaJugador.innerHTML = "Waltermon"
+    spanMascotaJugador.innerHTML = "WALTERMON"
    }
    else {
     alert ("no seleccionaste tu mascota")
@@ -77,14 +78,53 @@ function ataqueAleatorioEnemigo(){
     let ataqueAletorio = aleatorio(1,3)
     
     if (ataqueAletorio == 3){
-        ataqueEnemigo = "agua"
+        ataqueEnemigo = "AGUA"
     }
     else if (ataqueAletorio == 2){
-        ataqueEnemigo = "tierra"
+        ataqueEnemigo = "TIERRA"
     }
     else{
-        ataqueEnemigo = "fuego"
+        ataqueEnemigo = "FUEGO"
+    }
+
+    combate()
+}
+
+//COMBATE
+
+function combate (){
+   
+    if(ataqueJugador == ataqueEnemigo) {
+        resultado= "Es un trágico EMPATE!!🫣🫢"
+        crearMensaje()
+      } 
+      else if ((ataqueJugador  == "TIERRA" && ataqueEnemigo == "AGUA") || 
+      (ataqueJugador  == "FUEGO" && ataqueEnemigo == "TIERRA") || 
+      (ataqueJugador  == "AGUA" && ataqueEnemigo == "FUEGO")) {
+        resultado= "Acabas de GANAR!! 👏🤩🏅"
+        crearMensaje()
+      }
+      else {
+        resultado= "PERDISTE!! 🤕🤕🤕"
+        crearMensaje()
     }
 }
+
+
+function crearMensaje(){
+    let sectionMensaje = document.getElementById("mensajes")
+    let parrafo = document.createElement("p")
+
+    parrafo.innerHTML= "Tu mascota ataco con " + ataqueJugador +", la mascota de tu enemigo ataco con " + 
+    ataqueEnemigo + " -  "  + resultado  
+
+    sectionMensaje.appendChild(parrafo)
+
+}
+
+
+    
+    
+
 
 window.addEventListener("load", iniciarJuego)
