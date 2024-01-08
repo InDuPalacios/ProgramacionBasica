@@ -1,6 +1,8 @@
 let ataqueJugador 
 let ataqueEnemigo
 let resultado
+let vidasJugador = 3
+let vidasEnemigo = 3
 
 function iniciarJuego() {
     let botonMascotaJugador = document.getElementById("boton-mascota")
@@ -29,7 +31,7 @@ function seleccionarMascotaJugador(){
     spanMascotaJugador.innerHTML = "FIREMON"
    }
    else if (inputWaltermon.checked){
-    spanMascotaJugador.innerHTML = "WALTERMON"
+    spanMascotaJugador.innerHTML = "WALTERM"
    }
    else {
     alert ("no seleccionaste tu mascota")
@@ -93,7 +95,9 @@ function ataqueAleatorioEnemigo(){
 //COMBATE
 
 function combate (){
-   
+    let vidasTotalJugador = document.getElementById ("vidas-jugador")
+    let vidasTotalEnemigo = document.getElementById("vidas-enemigo")
+
     if(ataqueJugador == ataqueEnemigo) {
         resultado= "Es un trágico EMPATE!!🫣🫢"
         crearMensaje()
@@ -103,13 +107,28 @@ function combate (){
       (ataqueJugador  == "AGUA" && ataqueEnemigo == "FUEGO")) {
         resultado= "Acabas de GANAR!! 👏🤩🏅"
         crearMensaje()
+        vidasEnemigo --
+        vidasTotalEnemigo.innerHTML = vidasEnemigo
       }
       else {
         resultado= "PERDISTE!! 🤕🤕🤕"
         crearMensaje()
+        vidasJugador --
+        vidasTotalJugador.innerHTML = vidasJugador
     }
+
+    revisarVidas()
+
 }
 
+function revisarVidas (){
+    if (vidasJugador == 0){
+        crearMensajeFinal("perdiste")
+    }
+    else if (vidasEnemigo == 0){
+        crearMensajeFinal("ganaste")
+    }
+}
 
 function crearMensaje(){
     let sectionMensaje = document.getElementById("mensajes")
@@ -119,12 +138,16 @@ function crearMensaje(){
     ataqueEnemigo + " -  "  + resultado  
 
     sectionMensaje.appendChild(parrafo)
-
 }
 
+function crearMensajeFinal(resultadoFinal){
+    let sectionMensaje = document.getElementById("mensajes")
+    let parrafo = document.createElement("p")
 
-    
-    
+    parrafo.innerHTML = resultadoFinal
+
+    sectionMensaje.appendChild(parrafo)
+}
 
 
 window.addEventListener("load", iniciarJuego)
