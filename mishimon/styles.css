@@ -32,13 +32,33 @@ body{
 
 .tajeta-de-mishimon{
     background-color: #E7BCDE;
-    width: 100px;
+    width: 180px;
     height: 100px;
     padding: 10px;
     box-sizing: border-box; /*Esto hace que el pading que agrego no modifique el tamaño del content*/
     border-radius: 15px;
+    display: flex;
+    color: #67729D;
+    justify-content: center;
+    align-items: center;
+}
+
+.tarjetas img{
+    width: 80px;
 }
 
 input{
     display: none;
+}
+
+#boton-mascota{
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #E7BCDE;
+    border-radius: 20px;
+    color: #67729D;
+    border: none;
+    width: 560px;
+    font-family: 'Fira Sans Condensed', sans-serif;
+    
 }
