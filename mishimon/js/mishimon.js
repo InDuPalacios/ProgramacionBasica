@@ -4,21 +4,35 @@ let resultado
 let vidasJugador = 3
 let vidasEnemigo = 3
 
+//Escuchando los botones
 function iniciarJuego() {
+    let sectionSeleccionarAtaque = document.getElementById("seleccionar-ataque")
+    sectionSeleccionarAtaque.style.display = "none"
+    let sectionReiniciarJuego = document.getElementById("reiniciar")
+    sectionReiniciarJuego.style.display = "none"
+
+
     let botonMascotaJugador = document.getElementById("boton-mascota")
     botonMascotaJugador.addEventListener("click", seleccionarMascotaJugador)
 
     let botonTierra = document.getElementById("boton-tierra")
     botonTierra.addEventListener("click", ataqueTierra)
-
     let botonFuego = document.getElementById("boton-fuego")
     botonFuego.addEventListener("click", ataqueFuego)
-
     let botonAgua = document.getElementById("boton-agua")
     botonAgua.addEventListener("click", ataqueAgua)
+
+    let botonReiniciar = document.getElementById("boton-reiniciar")
+    botonReiniciar.addEventListener("click", reiniciarJuego)
 }
 
+//Seleccion de mascotas
 function seleccionarMascotaJugador(){
+    let sectionSeleccionarMascota =  document.getElementById("seleccionar-mascota")
+    sectionSeleccionarMascota.style.display = "none"
+    let sectionSeleccionarAtaque = document.getElementById("seleccionar-ataque")
+    sectionSeleccionarAtaque.style.display = "block"
+
     let inputGrowmon = document.getElementById("growmon")
     let inputFiremon = document.getElementById("firemon")
     let inputWaltermon = document.getElementById("waltermon")
@@ -34,12 +48,11 @@ function seleccionarMascotaJugador(){
     spanMascotaJugador.innerHTML = "WALTERM"
    }
    else {
-    alert ("no seleccionaste tu mascota")
+    alert ("No has selecionado tu mascota")
    } 
 
    seleccionarMascotaEnemigo()
 }
-
 
 function seleccionarMascotaEnemigo(){
     let mascotaEnemigo = aleatorio (1,3)
@@ -56,10 +69,7 @@ function seleccionarMascotaEnemigo(){
        }
 }
 
-function aleatorio(min, max){
-    return Math.floor(Math.random() * (max - min + 1) + min)
-}
-
+//Seleccion de ataque
 function ataqueTierra(){
     ataqueJugador = "TIERRA"
 
@@ -76,6 +86,7 @@ function ataqueAgua(){
     ataqueAleatorioEnemigo()
 }
 
+//Ataque del enemigo
 function ataqueAleatorioEnemigo(){
     let ataqueAletorio = aleatorio(1,3)
     
@@ -93,7 +104,6 @@ function ataqueAleatorioEnemigo(){
 }
 
 //COMBATE
-
 function combate (){
     let vidasTotalJugador = document.getElementById ("vidas-jugador")
     let vidasTotalEnemigo = document.getElementById("vidas-enemigo")
@@ -123,10 +133,10 @@ function combate (){
 
 function revisarVidas (){
     if (vidasJugador == 0){
-        crearMensajeFinal("perdiste")
+        crearMensajeFinal("💀 Lo siento, acabas de PERDER 💀 Me debes un helado 😋🍨")
     }
     else if (vidasEnemigo == 0){
-        crearMensajeFinal("ganaste")
+        crearMensajeFinal("YEEEEH GANASTE 🤗🤗🤗 Felicitaciones!!!🌟🌟🌟")
     }
 }
 
@@ -140,14 +150,35 @@ function crearMensaje(){
     sectionMensaje.appendChild(parrafo)
 }
 
+//Resultado final de la partida
 function crearMensajeFinal(resultadoFinal){
+    let sectionReiniciarJuego = document.getElementById("reiniciar")
+    sectionReiniciarJuego.style.display = "block"
+
     let sectionMensaje = document.getElementById("mensajes")
     let parrafo = document.createElement("p")
 
     parrafo.innerHTML = resultadoFinal
 
     sectionMensaje.appendChild(parrafo)
+
+    let botonTierra = document.getElementById("boton-tierra")
+    botonTierra.disabled = true
+    let botonFuego = document.getElementById("boton-fuego")
+    botonFuego.disabled = true
+    let botonAgua = document.getElementById("boton-agua")
+    botonAgua.disabled = true
+    let botonMascotaJugador = document.getElementById("boton-mascota")
+    botonMascotaJugador.disabled = true
 }
 
+//Reiniciar juego
+function reiniciarJuego(){
+    location.reload()
+}
+
+function aleatorio(min, max){
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
 
 window.addEventListener("load", iniciarJuego)
