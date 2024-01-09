@@ -5,20 +5,36 @@
         <title>Mishimon</title>
         <script src="./js/mishimon.js"></script>
         <link rel="stylesheet" href="./styles.css">
-    </head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@300;400&display=swap" rel="stylesheet">
+        </head>
 
     <body>
         <section id="seleccionar-mascota">
-            <h1 class="titulo">MISHIMON 🌱🔥💧</h1>
+            <h1 class="titulo"> Mishimon </h1>
+            <h2  class="subtitulo" >Elige a tu mascota </h2>
+            
+            <div class="tarjetas">
+                <label class="tajeta-de-mishimon" for="growmon" >
+                    <p>Growmon</p>
+                    <img src="">
+                </label>
+                <input type="radio" name="mascota" id="growmon" />
 
-            <h2>Elige a tu mascota : </h2>
+                <label class="tajeta-de-mishimon" for="firemon">
+                    <p>Firemon</p>
+                    <img src="">
+                </label>
+                <input type="radio" name="mascota" id="firemon" />
 
-            <label for="growmon" >Growmon</label>
-            <input type="radio" name="mascota" id="growmon" />
-            <label for="firemon">Firemon</label>
-            <input type="radio" name="mascota" id="firemon" />
-            <label for="waltermon">Waltermon</label>
-            <input type="radio" name="mascota" id="waltermon" />
+                <label class="tajeta-de-mishimon" for="waltermon">
+                    <p>Waltermon</p>
+                    <img src="">
+                </label>
+                <input type="radio" name="mascota" id="waltermon" />
+            </div>
 
             <button id="boton-mascota">Seleccionar</button>
         </section>

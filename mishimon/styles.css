@@ -4,12 +4,9 @@ h =  de tipo que es la misma etiqueta del html
 .title = de clase y se utiliza con un punto
 #tittle= de id que se nombra con un # */
 
-
-.titulo {
-    color: lightblue;
-    width: 310px;
-    height: 50px;
-    background-color: teal;
+body{
+    font-family: 'Fira Sans Condensed', sans-serif;
+    background-color: #FED9ED;
 }
 
 #seleccionar-mascota{
@@ -17,4 +14,31 @@ h =  de tipo que es la misma etiqueta del html
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.titulo{
+    color: #67729D;
+}
+
+.subtitulo{
+    color: #BB9CC0 ;
+    font-size: 18px;
+}
+
+.tarjetas{
+   display: flex;
+   gap: 10px;
+}
+
+.tajeta-de-mishimon{
+    background-color: #E7BCDE;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    box-sizing: border-box; /*Esto hace que el pading que agrego no modifique el tamaño del content*/
+    border-radius: 15px;
+}
+
+input{
+    display: none;
 }
