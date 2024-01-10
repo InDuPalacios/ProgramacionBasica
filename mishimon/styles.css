@@ -60,5 +60,62 @@ input{
     border: none;
     width: 560px;
     font-family: 'Fira Sans Condensed', sans-serif;
-    
 }
+
+#seleccionar-ataque{
+    flex-direction: column;
+    align-items: center;
+}
+.boton-de-ataque{
+    padding: 10px;
+    margin: 5px;
+    width: 100px;
+    background-color: #E7BCDE;
+    border-radius: 20px;
+    color: #67729D;
+    border: none;
+    font-family: 'Fira Sans Condensed', sans-serif;
+}
+
+#mensajes{
+    width: 330px;
+    color: #67729D;
+    background-color: #E7BCDE;
+    padding: 20px;
+    margin-top: 20px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+#boton-reiniciar{
+    padding: 10px;
+    margin: 5px;
+    width: 100px;
+    background-color: #67729D;
+    color: #FED9ED;
+    border-radius: 20px;
+    border: none;
+    font-family: 'Fira Sans Condensed', sans-serif;
+}
+
+.ataques{
+    background-color: #67729D;
+    display: grid;
+    grid-template-columns: 100px 100px;
+}
+
+#recorcholi{
+    width: 330px;
+    color: #67729D;
+    background-color: #E7BCDE;
+    padding: 20px;
+    margin-top: 20px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;}

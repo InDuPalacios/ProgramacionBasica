@@ -7,8 +7,8 @@
         <link rel="stylesheet" href="./styles.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@300;400&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@300;400&display=swap" rel="stylesheet">
         </head>
 
     <body>
@@ -19,7 +19,7 @@
             <div class="tarjetas">
                 <label class="tajeta-de-mishimon" for="growmon" >
                     <p>Growmon</p>
-                    <img src="./assets/mishimon_growmon.webp" alt="growmon">
+                    <img src="./assets/mishimon__growmon.webp" alt="growmon">
                 </label>
                 <input type="radio" name="mascota" id="growmon" />
 
@@ -31,7 +31,7 @@
 
                 <label class="tajeta-de-mishimon" for="waltermon">
                     <p>Walthermon</p>
-                    <img src="./assets/mishimon_waltermon.webp" alt="waltermon">
+                    <img src="./assets/mishimon__waltermon.webp" alt="waltermon">
                 </label>
                 <input type="radio" name="mascota" id="waltermon" />
             </div>
@@ -40,24 +40,44 @@
         </section>
 
         <section id="seleccionar-ataque">
-            <h2>Elige tu ataque : </h2>
-            <p>Tu mascota <samp id="mascota-jugador"></samp> tiene <samp id="vidas-jugador">3</samp> vidas</p>
-            <p>La mascota <samp id="mascota-enemigo"></samp> de tu enemigo <samp id="vidas-enemigo">3</samp> vidas</p>
-            <p>
-                <button id="boton-tierra">Tierra 🌱</button>
-                <button id="boton-fuego">Fuego 🔥</button>
-                <button id="boton-agua">Agua 💧</button>
-            </p>
+
+            <h1 class="titulo"> Mishimon </h1>
+
+            <h2  class="subtitulo" >Elige tu ataque</h2>
+           
+            <div >
+                <button id="boton-tierra" class="boton-de-ataque">Tierra 🌱</button>
+                <button id="boton-fuego" class="boton-de-ataque">Fuego 🔥</button>
+                <button id="boton-agua" class="boton-de-ataque">Agua 💧</button>
+            </div>
+
+            <div id="mensajes">
+                <p id="resultado">Buena suerte! 🍀</p>
+            
+                <section id="reiniciar">
+                    <button id="boton-reiniciar">Reiniciar</button>
+                </section>
+            </div>
+            
+            <div id="recorcholi">
+                <p>ensayando</p>
+            </div>
+
+            <div class="ataques">
+                <div>
+                    <p id="vidas-jugador">3</p>
+                    <p id="mascota-jugador"></p>
+                    <div id="ataques-del-jugador"></div>
+                </div>
+
+                <div>
+                    <p id="vidas-enemigo">3</p>
+                    <p id="mascota-enemigo"></p>
+                    <div id="ataques-del-enemigo"></div>
+                </div>
+            </div>
+           
         </section>
-
-        <section id="mensajes">
-        </section>
-
-        <section id="reiniciar">
-            <button id="boton-reiniciar">Reiniciar</button>
-        </section>
-
-
 
     </body>
 

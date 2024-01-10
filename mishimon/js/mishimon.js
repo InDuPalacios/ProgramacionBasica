@@ -31,7 +31,7 @@ function seleccionarMascotaJugador(){
     let sectionSeleccionarMascota =  document.getElementById("seleccionar-mascota")
     sectionSeleccionarMascota.style.display = "none"
     let sectionSeleccionarAtaque = document.getElementById("seleccionar-ataque")
-    sectionSeleccionarAtaque.style.display = "block"
+    sectionSeleccionarAtaque.style.display = "flex"
 
     let inputGrowmon = document.getElementById("growmon")
     let inputFiremon = document.getElementById("firemon")
@@ -115,7 +115,7 @@ function combate (){
       else if ((ataqueJugador  == "TIERRA" && ataqueEnemigo == "AGUA") || 
       (ataqueJugador  == "FUEGO" && ataqueEnemigo == "TIERRA") || 
       (ataqueJugador  == "AGUA" && ataqueEnemigo == "FUEGO")) {
-        resultado= "Acabas de GANAR!! 👏🤩🏅"
+        resultado= "Acabas de GANAR!!👏🤩"
         crearMensaje()
         vidasEnemigo --
         vidasTotalEnemigo.innerHTML = vidasEnemigo
@@ -133,34 +133,37 @@ function combate (){
 
 function revisarVidas (){
     if (vidasJugador == 0){
-        crearMensajeFinal("💀 Lo siento, acabas de PERDER 💀 Me debes un helado 😋🍨")
+        crearMensajeFinal("💀 Lo siento, acabas de PERDER 💀 ")
     }
     else if (vidasEnemigo == 0){
-        crearMensajeFinal("YEEEEH GANASTE 🤗🤗🤗 Felicitaciones!!!🌟🌟🌟")
+        crearMensajeFinal("YEEEEH GANASTE🤗🌟")
     }
 }
 
 function crearMensaje(){
-    let sectionMensaje = document.getElementById("mensajes")
-    let parrafo = document.createElement("p")
+    let sectionMensaje = document.getElementById("resultado")
+    let ataquesDelJugador = document.getElementById("ataques-del-jugador")
+    let ataquesDelEnemigo = document.getElementById("ataques-del-enemigo")
 
-    parrafo.innerHTML= "Tu mascota ataco con " + ataqueJugador +", la mascota de tu enemigo ataco con " + 
-    ataqueEnemigo + " -  "  + resultado  
+    let nuevoAtaqueDelJugador = document.createElement("p")
+    let nuevoAtaqueDelEnemigo = document.createElement("p")
 
-    sectionMensaje.appendChild(parrafo)
+    sectionMensaje.innerHTML = resultado
+    nuevoAtaqueDelJugador.innerHTML = ataqueJugador
+    nuevoAtaqueDelEnemigo.innerHTML = ataqueEnemigo
+
+    ataquesDelJugador.appendChild(nuevoAtaqueDelJugador)
+    ataquesDelEnemigo.appendChild(nuevoAtaqueDelEnemigo)
 }
 
 //Resultado final de la partida
 function crearMensajeFinal(resultadoFinal){
     let sectionReiniciarJuego = document.getElementById("reiniciar")
-    sectionReiniciarJuego.style.display = "block"
+    sectionReiniciarJuego.style.display = "flex"
 
-    let sectionMensaje = document.getElementById("mensajes")
     let parrafo = document.createElement("p")
 
-    parrafo.innerHTML = resultadoFinal
-
-    sectionMensaje.appendChild(parrafo)
+    sectionMensaje.innerHTML = resultadoFinal
 
     let botonTierra = document.getElementById("boton-tierra")
     botonTierra.disabled = true
