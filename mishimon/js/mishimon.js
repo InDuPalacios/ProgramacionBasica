@@ -39,13 +39,13 @@ function seleccionarMascotaJugador(){
     let spanMascotaJugador = document.getElementById("mascota-jugador")
 
    if (inputGrowmon.checked){
-    spanMascotaJugador.innerHTML = "GROWMON"
+    spanMascotaJugador.innerHTML = "Growmon"
    }
    else if (inputFiremon.checked){
-    spanMascotaJugador.innerHTML = "FIREMON"
+    spanMascotaJugador.innerHTML = "Firemon"
    }
    else if (inputWaltermon.checked){
-    spanMascotaJugador.innerHTML = "WALTERM"
+    spanMascotaJugador.innerHTML = "Waltermon"
    }
    else {
     alert ("No has selecionado tu mascota")
@@ -59,30 +59,30 @@ function seleccionarMascotaEnemigo(){
     let spanMascotaEnemigo = document.getElementById("mascota-enemigo")
     
     if (mascotaEnemigo == 1){
-        spanMascotaEnemigo.innerHTML = "DEARTHMON"
+        spanMascotaEnemigo.innerHTML = "Dearthmon"
        }
        else if (mascotaEnemigo == 2){
-        spanMascotaEnemigo.innerHTML = "DEFIREMON"
+        spanMascotaEnemigo.innerHTML = "Defiremon"
        }
        else {
-        spanMascotaEnemigo.innerHTML = "DEWATERMON"
+        spanMascotaEnemigo.innerHTML = "Dewatermon"
        }
 }
 
 //Seleccion de ataque
 function ataqueTierra(){
-    ataqueJugador = "TIERRA"
+    ataqueJugador = "Tierra"
 
     ataqueAleatorioEnemigo()
 }
 
 function ataqueFuego(){
-    ataqueJugador = "FUEGO"
+    ataqueJugador = "Fuego"
     ataqueAleatorioEnemigo()
 }
 
 function ataqueAgua(){
-    ataqueJugador = "AGUA"
+    ataqueJugador = "Agua"
     ataqueAleatorioEnemigo()
 }
 
@@ -91,13 +91,13 @@ function ataqueAleatorioEnemigo(){
     let ataqueAletorio = aleatorio(1,3)
     
     if (ataqueAletorio == 3){
-        ataqueEnemigo = "AGUA"
+        ataqueEnemigo = "Agua"
     }
     else if (ataqueAletorio == 2){
-        ataqueEnemigo = "TIERRA"
+        ataqueEnemigo = "Tierra"
     }
     else{
-        ataqueEnemigo = "FUEGO"
+        ataqueEnemigo = "Fuego"
     }
 
     combate()
@@ -112,9 +112,9 @@ function combate (){
         resultado= "Es un trágico EMPATE!!🫣🫢"
         crearMensaje()
       } 
-      else if ((ataqueJugador  == "TIERRA" && ataqueEnemigo == "AGUA") || 
-      (ataqueJugador  == "FUEGO" && ataqueEnemigo == "TIERRA") || 
-      (ataqueJugador  == "AGUA" && ataqueEnemigo == "FUEGO")) {
+      else if ((ataqueJugador  == "Tierra" && ataqueEnemigo == "Agua") || 
+      (ataqueJugador  == "Fuego" && ataqueEnemigo == "Tierra") || 
+      (ataqueJugador  == "Agua" && ataqueEnemigo == "Fuego")) {
         resultado= "Acabas de GANAR!!👏🤩"
         crearMensaje()
         vidasEnemigo --

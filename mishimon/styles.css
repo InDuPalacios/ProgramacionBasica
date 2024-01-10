@@ -25,7 +25,7 @@ body{
     font-size: 18px;
 }
 
-.tarjetas{
+.tarjetas, .tarjetas-ataques{
    display: flex;
    gap: 10px;
 }
@@ -37,8 +37,8 @@ body{
     padding: 10px;
     box-sizing: border-box; /*Esto hace que el pading que agrego no modifique el tamaño del content*/
     border-radius: 15px;
-    display: flex;
     color: #67729D;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -48,7 +48,22 @@ body{
 }
 
 input{
-    display: none;
+   display: none;
+}
+
+input:checked + label{
+    background-color: #67729D;
+    color:#E7BCDE;
+}
+
+#boton-mascota:hover{
+    background-color: #67729D;
+    color: #E7BCDE;
+}
+
+.tajeta-de-mishimon:hover{
+    color: #E7BCDE;
+    background-color: #BB9CC0;
 }
 
 #boton-mascota{
@@ -66,6 +81,7 @@ input{
     flex-direction: column;
     align-items: center;
 }
+
 .boton-de-ataque{
     padding: 10px;
     margin: 5px;
@@ -89,6 +105,7 @@ input{
     justify-content: center;
     flex-direction: column;
     align-items: center;
+}
 
 #boton-reiniciar{
     padding: 10px;
@@ -102,20 +119,31 @@ input{
 }
 
 .ataques{
-    background-color: #67729D;
     display: grid;
-    grid-template-columns: 100px 100px;
+    grid-template-columns: 180px 180px;
 }
 
-#recorcholi{
-    width: 330px;
-    color: #67729D;
-    background-color: #E7BCDE;
-    padding: 20px;
-    margin-top: 20px;
-    box-sizing: border-box;
-    border-radius: 20px;
+.ataques-jugador, .ataques-enemigo{
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    align-items: center;}
+    align-items: center;
+    background-color: #BB9CC0;
+    color: #67729D;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 20px;
+    border-radius: 15px;
+}
+
+@media(max-width:360px){
+    .tarjetas{
+        flex-direction: column;
+    }
+}
+
+@media(max-width:360px){
+    .tarjetas-ataques{
+        flex-direction: column;
+    }
+}
+

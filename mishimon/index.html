@@ -17,23 +17,24 @@
             <h2  class="subtitulo" >Elige a tu mascota </h2>
             
             <div class="tarjetas">
+
+                <input type="radio" name="mascota" id="growmon" />
                 <label class="tajeta-de-mishimon" for="growmon" >
                     <p>Growmon</p>
                     <img src="./assets/mishimon__growmon.webp" alt="growmon">
                 </label>
-                <input type="radio" name="mascota" id="growmon" />
 
+                <input type="radio" name="mascota" id="firemon" />
                 <label class="tajeta-de-mishimon" for="firemon">
                     <p>Firemon</p>
                     <img src="./assets/mishimon_firemon.webp" alt="firemon">
                 </label>
-                <input type="radio" name="mascota" id="firemon" />
 
+                <input type="radio" name="mascota" id="waltermon" />
                 <label class="tajeta-de-mishimon" for="waltermon">
                     <p>Walthermon</p>
                     <img src="./assets/mishimon__waltermon.webp" alt="waltermon">
                 </label>
-                <input type="radio" name="mascota" id="waltermon" />
             </div>
 
             <button id="boton-mascota">Seleccionar</button>
@@ -43,36 +44,32 @@
 
             <h1 class="titulo"> Mishimon </h1>
 
-            <h2  class="subtitulo" >Elige tu ataque</h2>
+            <h2  class="subtitulo" >Estos son tus ataques:</h2>
            
-            <div >
+            <div class="tarjetas-ataques">
                 <button id="boton-tierra" class="boton-de-ataque">Tierra 🌱</button>
                 <button id="boton-fuego" class="boton-de-ataque">Fuego 🔥</button>
                 <button id="boton-agua" class="boton-de-ataque">Agua 💧</button>
             </div>
 
             <div id="mensajes">
-                <p id="resultado">Buena suerte! 🍀</p>
+                <p id="resultado">Elige un ataque, buena suerte! 🍀</p>
             
                 <section id="reiniciar">
                     <button id="boton-reiniciar">Reiniciar</button>
                 </section>
             </div>
-            
-            <div id="recorcholi">
-                <p>ensayando</p>
-            </div>
 
             <div class="ataques">
-                <div>
-                    <p id="vidas-jugador">3</p>
+                <div class="ataques-jugador">
                     <p id="mascota-jugador"></p>
+                    <p id="vidas-jugador">3</p>
                     <div id="ataques-del-jugador"></div>
                 </div>
 
-                <div>
-                    <p id="vidas-enemigo">3</p>
+                <div class="ataques-enemigo">
                     <p id="mascota-enemigo"></p>
+                    <p id="vidas-enemigo">3</p>
                     <div id="ataques-del-enemigo"></div>
                 </div>
             </div>
