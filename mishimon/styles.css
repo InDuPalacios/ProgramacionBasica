@@ -118,12 +118,14 @@ input:checked + label{
     font-family: 'Fira Sans Condensed', sans-serif;
 }
 
-.ataques{
-    display: grid;
-    grid-template-columns: 180px 180px;
+.ataques {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Espaciado entre los dos contenedores */
+    flex-wrap: wrap; /* Permite que los elementos se apilen si la pantalla es pequeña */
 }
 
-.ataques-jugador, .ataques-enemigo{
+.ataques-jugador, .ataques-enemigo {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -133,6 +135,33 @@ input:checked + label{
     box-sizing: border-box;
     margin: 20px;
     border-radius: 15px;
+    min-height: 250px; /* 🔹 Asegura que ambos tengan la misma altura */
+    width: 180px; /* 🔹 Define un ancho fijo */
+}
+
+#mascota-jugador, #mascota-enemigo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+    text-align: center;
+    overflow: hidden;
+}
+
+#mascota-jugador img, #mascota-enemigo img {
+    border-radius: 10px;
+    margin-bottom: 5px;
+    width: 100px; /* 🔹 Ajuste de tamaño de imagen */
+    height: 100px; /* 🔹 Se asegura de que la imagen tenga altura fija */
+    object-fit: cover; /* 🔹 Asegura que la imagen no se distorsione */
+}
+
+/* 🔥 Estilos responsivos para que se apilen en pantallas pequeñas */
+@media (max-width: 480px) {
+    .ataques {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 @media(max-width:360px){

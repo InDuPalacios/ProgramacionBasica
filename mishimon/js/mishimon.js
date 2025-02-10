@@ -1,187 +1,217 @@
-let ataqueJugador 
-let ataqueEnemigo
-let resultado
-let vidasJugador = 3
-let vidasEnemigo = 3
+// 1️⃣ Variables globales
+const botonesAtaque = ["tierra", "fuego", "agua"];
+const mascotas = ["Growmon", "Firemon", "Waltermon"];
+const enemigos = ["Dearthmon", "Defiremon", "Dewatermon"]; 
+const contenedorTarjetas = document.getElementById('contenedorTarjetas');
+const ataques = ["Agua", "Tierra", "Fuego"];
 
-//Escuchando los botones
+const botonMascotaJugador = document.getElementById("boton-mascota");
+const botonReiniciar = document.getElementById("boton-reiniciar");
+
+let mishimones = []
+let ataqueJugador, ataqueEnemigo, resultado, opcionDeMishimones;
+let vidasJugador = 3, vidasEnemigo = 3;
+
+class Mishimon{
+    constructor(nombre, foto, vida,){
+        this.nombre = nombre
+        this.foto = foto
+        this.vida = vida
+        this.ataques = []
+    }
+}
+
+let growmon = new Mishimon('Growmon', './assets/mishimon__growmon.webp', 5)
+let firemon = new Mishimon('Firemon', './assets/mishimon_firemon.webp', 5)
+let waltermon = new Mishimon('Waltermon', './assets/mishimon__waltermon.webp', 5)
+
+waltermon.ataques.push(
+    { nombre:'💧', id: 'boton-agua' },
+    { nombre:'💧', id: 'boton-agua' },
+    { nombre:'💧', id: 'boton-agua' },
+    { nombre:'🔥', id: 'boton-fuego' },
+    { nombre:'🌱', id: 'boton-tierra' }
+)
+
+growmon.ataques.push(
+    { nombre:'🌱', id: 'boton-tierra' },
+    { nombre:'🌱', id: 'boton-tierra' },
+    { nombre:'🌱', id: 'boton-tierra' },
+    { nombre:'🔥', id: 'boton-fuego' },
+    { nombre:'💧', id: 'boton-agua' }
+)
+
+firemon.ataques.push(
+    { nombre:'🔥', id: 'boton-fuego' },
+    { nombre:'🔥', id: 'boton-fuego' },
+    { nombre:'🔥', id: 'boton-fuego' },
+    { nombre:'💧', id: 'boton-agua' },
+    { nombre:'🌱', id: 'boton-tierra' }
+)
+
+mishimones.push(waltermon,growmon,firemon)
+
+// 2️⃣ Función que inicia el juego
 function iniciarJuego() {
-    let sectionSeleccionarAtaque = document.getElementById("seleccionar-ataque")
-    sectionSeleccionarAtaque.style.display = "none"
-    let sectionReiniciarJuego = document.getElementById("reiniciar")
-    sectionReiniciarJuego.style.display = "none"
+    document.getElementById("seleccionar-ataque").style.display = "none";
+    document.getElementById("reiniciar").style.display = "none";
 
+    mishimones.forEach((mishimon) => {
+        opcionDeMishimones = `
+        <input type="radio" name="mascota" id=${mishimon.nombre} />
+                <label class="tajeta-de-mishimon" for=${mishimon.nombre} >
+                    <p>${mishimon.nombre}</p>
+                    <img src=${mishimon.foto} alt=${mishimon.nombre}>
+                </label>`
+        contenedorTarjetas.innerHTML += opcionDeMishimones;
 
-    let botonMascotaJugador = document.getElementById("boton-mascota")
-    botonMascotaJugador.addEventListener("click", seleccionarMascotaJugador)
-
-    let botonTierra = document.getElementById("boton-tierra")
-    botonTierra.addEventListener("click", ataqueTierra)
-    let botonFuego = document.getElementById("boton-fuego")
-    botonFuego.addEventListener("click", ataqueFuego)
-    let botonAgua = document.getElementById("boton-agua")
-    botonAgua.addEventListener("click", ataqueAgua)
-
-    let botonReiniciar = document.getElementById("boton-reiniciar")
-    botonReiniciar.addEventListener("click", reiniciarJuego)
-}
-
-//Seleccion de mascotas
-function seleccionarMascotaJugador(){
-    let sectionSeleccionarMascota =  document.getElementById("seleccionar-mascota")
-    sectionSeleccionarMascota.style.display = "none"
-    let sectionSeleccionarAtaque = document.getElementById("seleccionar-ataque")
-    sectionSeleccionarAtaque.style.display = "flex"
-
-    let inputGrowmon = document.getElementById("growmon")
-    let inputFiremon = document.getElementById("firemon")
-    let inputWaltermon = document.getElementById("waltermon")
-    let spanMascotaJugador = document.getElementById("mascota-jugador")
-
-   if (inputGrowmon.checked){
-    spanMascotaJugador.innerHTML = "Growmon"
-   }
-   else if (inputFiremon.checked){
-    spanMascotaJugador.innerHTML = "Firemon"
-   }
-   else if (inputWaltermon.checked){
-    spanMascotaJugador.innerHTML = "Waltermon"
-   }
-   else {
-    alert ("No has selecionado tu mascota")
-   } 
-
-   seleccionarMascotaEnemigo()
-}
-
-function seleccionarMascotaEnemigo(){
-    let mascotaEnemigo = aleatorio (1,3)
-    let spanMascotaEnemigo = document.getElementById("mascota-enemigo")
+    });
     
-    if (mascotaEnemigo == 1){
-        spanMascotaEnemigo.innerHTML = "Dearthmon"
-       }
-       else if (mascotaEnemigo == 2){
-        spanMascotaEnemigo.innerHTML = "Defiremon"
-       }
-       else {
-        spanMascotaEnemigo.innerHTML = "Dewatermon"
-       }
+    botonMascotaJugador.addEventListener("click", seleccionarMascotaJugador);
+    botonReiniciar.addEventListener("click", () => location.reload());
+
+    botonesAtaque.forEach(tipo => {
+        document.getElementById(`boton-${tipo}`).addEventListener("click", () => {
+            ataqueJugador = tipo.charAt(0).toUpperCase() + tipo.slice(1);
+            ataqueAleatorioEnemigo();
+        });
+    });
 }
 
-//Seleccion de ataque
-function ataqueTierra(){
-    ataqueJugador = "Tierra"
-
-    ataqueAleatorioEnemigo()
-}
-
-function ataqueFuego(){
-    ataqueJugador = "Fuego"
-    ataqueAleatorioEnemigo()
-}
-
-function ataqueAgua(){
-    ataqueJugador = "Agua"
-    ataqueAleatorioEnemigo()
-}
-
-//Ataque del enemigo
-function ataqueAleatorioEnemigo(){
-    let ataqueAletorio = aleatorio(1,3)
+// 3️⃣ Función para seleccionar la mascota
+function seleccionarMascotaJugador() {
+    const seleccionada = mishimones.find(m => document.getElementById(m.nombre).checked);
     
-    if (ataqueAletorio == 3){
-        ataqueEnemigo = "Agua"
-    }
-    else if (ataqueAletorio == 2){
-        ataqueEnemigo = "Tierra"
-    }
-    else{
-        ataqueEnemigo = "Fuego"
-    }
+    if (seleccionada) {
+        // Mostrar el nombre del Mishimon seleccionado
+        document.getElementById("mascota-jugador").innerHTML = seleccionada.nombre;
 
-    combate()
-}
+        // Crear y mostrar la imagen del Mishimon seleccionado
+        const imagenMishimon = document.createElement("img");
+        imagenMishimon.src = seleccionada.foto;
+        imagenMishimon.alt = seleccionada.nombre;
+        imagenMishimon.style.width = "120px";
+        imagenMishimon.style.display = "block";
 
-//COMBATE
-function combate (){
-    let vidasTotalJugador = document.getElementById ("vidas-jugador")
-    let vidasTotalEnemigo = document.getElementById("vidas-enemigo")
+        // Obtener el contenedor donde se muestra la mascota del jugador
+        const contenedorMascotaJugador = document.getElementById("mascota-jugador");
 
-    if(ataqueJugador == ataqueEnemigo) {
-        resultado= "Es un trágico EMPATE!!🫣🫢"
-        crearMensaje()
-      } 
-      else if ((ataqueJugador  == "Tierra" && ataqueEnemigo == "Agua") || 
-      (ataqueJugador  == "Fuego" && ataqueEnemigo == "Tierra") || 
-      (ataqueJugador  == "Agua" && ataqueEnemigo == "Fuego")) {
-        resultado= "Acabas de GANAR!!👏🤩"
-        crearMensaje()
-        vidasEnemigo --
-        vidasTotalEnemigo.innerHTML = vidasEnemigo
-      }
-      else {
-        resultado= "PERDISTE!! 🤕🤕🤕"
-        crearMensaje()
-        vidasJugador --
-        vidasTotalJugador.innerHTML = vidasJugador
-    }
+        // Limpiar contenido previo para evitar duplicados
+        contenedorMascotaJugador.innerHTML = "";
+        
+        // Agregar la imagen y el nombre al contenedor
+        contenedorMascotaJugador.appendChild(imagenMishimon);
+        contenedorMascotaJugador.appendChild(document.createTextNode(seleccionada.nombre));
 
-    revisarVidas()
+        // Ocultar selección y mostrar la pantalla de ataques
+        document.getElementById("seleccionar-mascota").style.display = "none";
+        document.getElementById("seleccionar-ataque").style.display = "flex";
 
-}
-
-function revisarVidas (){
-    if (vidasJugador == 0){
-        crearMensajeFinal("💀 Lo siento, acabas de PERDER 💀 ")
-    }
-    else if (vidasEnemigo == 0){
-        crearMensajeFinal("YEEEEH GANASTE🤗🌟")
+        seleccionarMascotaEnemigo();
+    } else {
+        alert("No has seleccionado tu mascota");
     }
 }
 
-function crearMensaje(){
-    let sectionMensaje = document.getElementById("resultado")
-    let ataquesDelJugador = document.getElementById("ataques-del-jugador")
-    let ataquesDelEnemigo = document.getElementById("ataques-del-enemigo")
 
-    let nuevoAtaqueDelJugador = document.createElement("p")
-    let nuevoAtaqueDelEnemigo = document.createElement("p")
+// 4️⃣ Función para seleccionar la mascota enemiga
+function seleccionarMascotaEnemigo() {
+    console.log("Función seleccionarMascotaEnemigo() ejecutada");
 
-    sectionMensaje.innerHTML = resultado
-    nuevoAtaqueDelJugador.innerHTML = ataqueJugador
-    nuevoAtaqueDelEnemigo.innerHTML = ataqueEnemigo
+    // Seleccionamos aleatoriamente un enemigo de la lista
+    const indiceEnemigo = aleatorio(0, enemigos.length - 1);
+    const nombreEnemigo = enemigos[indiceEnemigo];
 
-    ataquesDelJugador.appendChild(nuevoAtaqueDelJugador)
-    ataquesDelEnemigo.appendChild(nuevoAtaqueDelEnemigo)
+    console.log("Enemigo seleccionado:", nombreEnemigo);
+
+    // ✅ Definir correctamente la variable `imagenesEnemigos`
+    const imagenesEnemigos = {
+        "Dewatermon": "./assets/mishimon__dwather.webp",
+        "Defiremon": "./assets/mishimon_defire.webp",
+        "Dearthmon": "./assets/mishimon_desheet.webp"
+    };
+
+    // Crear la imagen del Mishimon enemigo
+    const imagenEnemigo = document.createElement("img");
+    imagenEnemigo.src = imagenesEnemigos[nombreEnemigo] || "./assets/default_mishimon.webp"; // Imagen por defecto si no se encuentra
+    imagenEnemigo.alt = nombreEnemigo;
+    imagenEnemigo.style.width = "120px";
+    imagenEnemigo.style.display = "block";
+
+    // Si la imagen no se carga, mostrar un mensaje en la consola
+    imagenEnemigo.onerror = function () {
+        console.error("No se pudo cargar la imagen del enemigo:", imagenEnemigo.src);
+    };
+
+    // Obtener el contenedor donde se muestra la mascota del enemigo
+    const contenedorMascotaEnemigo = document.getElementById("mascota-enemigo");
+
+    // Limpiar contenido previo para evitar duplicaciones
+    contenedorMascotaEnemigo.innerHTML = "";
+
+    // Crear el elemento de texto con el nombre del enemigo
+    const nombreEnemigoElemento = document.createElement("p");
+    nombreEnemigoElemento.innerText = nombreEnemigo;
+    nombreEnemigoElemento.classList.add("mascota-nombre");  // Aplicar negrilla con CSS
+
+    // Agregar imagen y nombre al contenedor
+    contenedorMascotaEnemigo.appendChild(imagenEnemigo);
+    contenedorMascotaEnemigo.appendChild(nombreEnemigoElemento);
 }
 
-//Resultado final de la partida
-function crearMensajeFinal(resultadoFinal){
-    let sectionReiniciarJuego = document.getElementById("reiniciar")
-    sectionReiniciarJuego.style.display = "flex"
 
-    let parrafo = document.createElement("p")
 
-    sectionMensaje.innerHTML = resultadoFinal
-
-    let botonTierra = document.getElementById("boton-tierra")
-    botonTierra.disabled = true
-    let botonFuego = document.getElementById("boton-fuego")
-    botonFuego.disabled = true
-    let botonAgua = document.getElementById("boton-agua")
-    botonAgua.disabled = true
-    let botonMascotaJugador = document.getElementById("boton-mascota")
-    botonMascotaJugador.disabled = true
+// 5️⃣ Función para el ataque del enemigo
+function ataqueAleatorioEnemigo() {
+    ataqueEnemigo = ataques[aleatorio(0, 2)];
+    combate();
 }
 
-//Reiniciar juego
-function reiniciarJuego(){
-    location.reload()
+// 6️⃣ Función de combate
+function combate() {
+    const resultadoTexto = (ataqueJugador === ataqueEnemigo) ? "Es un EMPATE!!"
+        : (ataqueJugador === "Tierra" && ataqueEnemigo === "Agua") ||
+          (ataqueJugador === "Fuego" && ataqueEnemigo === "Tierra") ||
+          (ataqueJugador === "Agua" && ataqueEnemigo === "Fuego") 
+        ? "GANASTE!! 🎉" : "PERDISTE!! 😢";
+
+    if (resultadoTexto.includes("GANASTE")) vidasEnemigo--;
+    if (resultadoTexto.includes("PERDISTE")) vidasJugador--;
+
+    document.getElementById("vidas-jugador").innerHTML = vidasJugador;
+    document.getElementById("vidas-enemigo").innerHTML = vidasEnemigo;
+    
+    crearMensaje(resultadoTexto);
+    revisarVidas();
 }
 
-function aleatorio(min, max){
-    return Math.floor(Math.random() * (max - min + 1) + min)
+// 7️⃣ Revisar si alguien perdió
+function revisarVidas() {
+    if (vidasJugador === 0) crearMensajeFinal("💀 PERDISTE 💀");
+    else if (vidasEnemigo === 0) crearMensajeFinal("🎉 GANASTE 🎉");
 }
 
-window.addEventListener("load", iniciarJuego)
+// 8️⃣ Función para mostrar mensajes
+function crearMensaje(resultado) {
+    document.getElementById("resultado").innerHTML = resultado;
+    ["ataques-del-jugador", "ataques-del-enemigo"].forEach((id, i) => {
+        const nuevoAtaque = document.createElement("p");
+        nuevoAtaque.innerHTML = i === 0 ? ataqueJugador : ataqueEnemigo;
+        document.getElementById(id).appendChild(nuevoAtaque);
+    });
+}
+
+// 9️⃣ Función para el mensaje final
+function crearMensajeFinal(resultadoFinal) {
+    document.getElementById("reiniciar").style.display = "flex";
+    document.getElementById("resultado").innerHTML = resultadoFinal;
+    botonesAtaque.forEach(id => document.getElementById(`boton-${id}`).disabled = true);
+}
+
+// 🔟 Función para generar un número aleatorio
+function aleatorio(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+// 🔥 Iniciar el juego cuando cargue la página
+window.addEventListener("load", iniciarJuego);

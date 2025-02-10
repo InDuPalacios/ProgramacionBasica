@@ -3,7 +3,6 @@
     <head>
         <meta charset="utf-8"/>
         <title>Mishimon</title>
-        <script src="./js/mishimon.js"></script>
         <link rel="stylesheet" href="./styles.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,25 +15,7 @@
             <h1 class="titulo"> Mishimon </h1>
             <h2  class="subtitulo" >Elige a tu mascota </h2>
             
-            <div class="tarjetas">
-
-                <input type="radio" name="mascota" id="growmon" />
-                <label class="tajeta-de-mishimon" for="growmon" >
-                    <p>Growmon</p>
-                    <img src="./assets/mishimon__growmon.webp" alt="growmon">
-                </label>
-
-                <input type="radio" name="mascota" id="firemon" />
-                <label class="tajeta-de-mishimon" for="firemon">
-                    <p>Firemon</p>
-                    <img src="./assets/mishimon_firemon.webp" alt="firemon">
-                </label>
-
-                <input type="radio" name="mascota" id="waltermon" />
-                <label class="tajeta-de-mishimon" for="waltermon">
-                    <p>Walthermon</p>
-                    <img src="./assets/mishimon__waltermon.webp" alt="waltermon">
-                </label>
+            <div id='contenedorTarjetas' class="tarjetas">  
             </div>
 
             <button id="boton-mascota">Seleccionar</button>
@@ -75,7 +56,7 @@
             </div>
            
         </section>
-
+        <script src="./js/mishimon.js"></script>
     </body>
 
 </html>
