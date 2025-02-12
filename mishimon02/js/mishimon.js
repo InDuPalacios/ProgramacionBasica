@@ -1,6 +1,5 @@
-// 1️⃣ Variables globales
+// Variables globales
 const contenedorTarjetas = document.getElementById('contenedorTarjetas');
-
 const botonMascotaJugador = document.getElementById("boton-mascota");
 const botonReiniciar = document.getElementById("boton-reiniciar");
 
@@ -83,8 +82,7 @@ firemon.ataques.push(
 mishimones.push(waltermon, growmon, firemon)
 enemigos.push(dewatermon, defiremon, dearthmon);
 
-
-// 2️⃣ Función que inicia el juego
+// Función que inicia el juego
 function iniciarJuego() {
     document.getElementById("seleccionar-ataque").style.display = "none";
     document.getElementById("reiniciar").style.display = "none";
@@ -104,7 +102,7 @@ function iniciarJuego() {
     botonReiniciar.addEventListener("click", reiniciarJuego);
 }
 
-// 3️⃣ Función para seleccionar la mascota
+// Función para seleccionar la mascota
 function seleccionarMascotaJugador() {
     const seleccionada = mishimones.find(m => document.getElementById(m.nombre).checked);
 
@@ -126,7 +124,7 @@ function seleccionarMascotaJugador() {
     }
 }
 
-// 4️⃣ Función para mostrar los botones de ataque
+// Función para mostrar los botones de ataque
 function mostrarBotonesAtaque() {
     const contenedorAtaques = document.querySelector(".tarjetas-ataques");
     contenedorAtaques.innerHTML = "";
@@ -168,7 +166,7 @@ function mostrarBotonesAtaque() {
     });
 }
 
-// 🔹 Función para mostrar los ataques restantes del enemigo con estilos
+// Función para mostrar los ataques restantes del enemigo con estilos
 function mostrarAtaquesEnemigo() {
     // Limpiamos solo los botones, sin afectar el subtítulo
     contenedorAtaquesEnemigoDisponibles.querySelectorAll("button").forEach(boton => boton.remove());
@@ -187,8 +185,7 @@ function mostrarAtaquesEnemigo() {
     });
 }
 
-
-// 5️⃣ Función para seleccionar la mascota enemiga
+// Función para seleccionar la mascota enemiga
 function seleccionarMascotaEnemigo() {
     const indiceEnemigo = aleatorio(0, enemigos.length - 1);
     const enemigo = enemigos[indiceEnemigo];
@@ -205,7 +202,7 @@ function seleccionarMascotaEnemigo() {
     mostrarAtaquesEnemigo();
 }
 
-// 6️⃣ Función para que el enemigo elija un ataque aleatorio
+// Función para que el enemigo elija un ataque aleatorio
 function ataqueAleatorioEnemigo() {
     const ataquesDisponibles = ataquesEnemigoDisponibles.filter(a => !a.usado);
     if (ataquesDisponibles.length === 0) return;
@@ -218,8 +215,7 @@ function ataqueAleatorioEnemigo() {
     combate();
 }
 
-
-// 7️⃣ Función de combate
+// Función de combate
 function combate() {
     const resultadoTexto = 
         (ataqueJugador === ataqueEnemigo) ? "Es un EMPATE!!"
@@ -255,7 +251,7 @@ function combate() {
     }
 }
 
-// 8️⃣ Función para registrar los ataques en el marcador
+// Función para registrar los ataques en el marcador
 function registrarAtaques() {
     let ataqueJugadorElem = document.createElement("p");
     ataqueJugadorElem.innerText = ataqueJugador;
@@ -266,7 +262,7 @@ function registrarAtaques() {
     contenedorAtaquesEnemigo.appendChild(ataqueEnemigoElem);
 }
 
-// 9️⃣ Revisar si alguien ha perdido y mostrar el mensaje final
+// Revisar si alguien ha perdido y mostrar el mensaje final
 function revisarVidas() {
     if (vidasJugador === 0) {
         crearMensajeFinal("💀 PERDISTE 💀");
@@ -275,33 +271,32 @@ function revisarVidas() {
     }
 }
 
-// 8️⃣ Función para mostrar mensajes en la interfaz
+// Función para mostrar mensajes en la interfaz
 function crearMensaje(resultado) {
     let resultadoElemento = document.getElementById("resultado");
     resultadoElemento.innerHTML = resultado;
 }
 
-
-// 🔟 Función para mostrar el mensaje final y desactivar botones de ataque
+// Función para mostrar el mensaje final y desactivar botones de ataque
 function crearMensajeFinal(resultadoFinal) {
     document.getElementById("reiniciar").style.display = "flex";
     document.getElementById("resultado").innerHTML = resultadoFinal;
 
-    // 🔴 Desactivar botones de ataque al finalizar el juego
+    // Desactivar botones de ataque al finalizar el juego
     document.querySelectorAll(".boton-de-ataque").forEach(boton => {
         boton.disabled = true;
     });
 }
 
-// 🔟 Función para reiniciar el juego
+// Función para reiniciar el juego
 function reiniciarJuego() {
     location.reload();
 }
 
-// 🔥 Generar número aleatorio
+// Generar número aleatorio
 function aleatorio(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-// 🔥 Iniciar juego
+// Iniciar juego
 window.addEventListener("load", iniciarJuego);
