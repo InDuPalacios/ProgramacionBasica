@@ -3,6 +3,14 @@ const contenedorTarjetas = document.getElementById('contenedorTarjetas');
 const botonMascotaJugador = document.getElementById("boton-mascota");
 const botonReiniciar = document.getElementById("boton-reiniciar");
 
+const contenedorAtaquesJugador = document.getElementById("ataques-del-jugador");
+const contenedorAtaquesEnemigo = document.getElementById("ataques-del-enemigo");
+const contenedorAtaquesEnemigoDisponibles = document.getElementById("ataques-enemigo-disponibles");
+
+const sectionVerMapa = document.getElementById("ver-mapa")
+const mapa = document.getElementById("mapa")
+let lienzo=mapa.getContext("2d")
+
 let mishimones = [];
 let enemigos = [];
 let ataqueJugador, ataqueEnemigo;
@@ -10,16 +18,18 @@ let vidasJugador = 3, vidasEnemigo = 3;
 let ataquesJugadorDisponibles = [], ataquesEnemigoDisponibles = [];
 let rondasJugadas = 0;
 
-const contenedorAtaquesJugador = document.getElementById("ataques-del-jugador");
-const contenedorAtaquesEnemigo = document.getElementById("ataques-del-enemigo");
-const contenedorAtaquesEnemigoDisponibles = document.getElementById("ataques-enemigo-disponibles");
-
 class Mishimon {
     constructor(nombre, foto, vida) {
-        this.nombre = nombre;
-        this.foto = foto;
-        this.vida = vida;
-        this.ataques = [];
+        this.nombre = nombre
+        this.foto = foto
+        this.vida = vida
+        this.ataques = []
+        this.x = 20
+        this.y = 30
+        this.ancho = 80
+        this.alto = 80
+        this.mapaFoto = new Image()
+        this.mapaFoto.src = foto
     }
 }
 
@@ -87,6 +97,7 @@ function iniciarJuego() {
     document.getElementById("seleccionar-ataque").style.display = "none";
     document.getElementById("reiniciar").style.display = "none";
     document.getElementById("ataques-enemigo-disponibles").style.display = "none";
+    sectionVerMapa.style.display = "none";
 
     mishimones.forEach((mishimon) => {
         let opcionDeMishimones = `
@@ -104,19 +115,28 @@ function iniciarJuego() {
 
 // Función para seleccionar la mascota
 function seleccionarMascotaJugador() {
-    const seleccionada = mishimones.find(m => document.getElementById(m.nombre).checked);
+    mishimonJugador = mishimones.find(m => document.getElementById(m.nombre).checked);
 
-    if (seleccionada) {
+    if (mishimonJugador) {
         let contenedorMascotaJugador = document.getElementById("mascota-jugador");
         contenedorMascotaJugador.innerHTML = `
-            <img src="${seleccionada.foto}" alt="${seleccionada.nombre}" width="120px">
-            <p>${seleccionada.nombre}</p>`;
+            <img src="${mishimonJugador.foto}" alt="${mishimonJugador.nombre}" width="120px">
+            <p>${mishimonJugador.nombre}</p>`;
 
-        ataquesJugadorDisponibles = seleccionada.ataques;
+        ataquesJugadorDisponibles = mishimonJugador.ataques;
         mostrarBotonesAtaque();
 
         document.getElementById("seleccionar-mascota").style.display = "none";
-        document.getElementById("seleccionar-ataque").style.display = "flex";
+        sectionVerMapa.style.display = "flex";
+
+        // 🔹 Asegurar que la imagen cargue antes de dibujarla
+        mishimonJugador.mapaFoto.onload = function () {
+            pintarMishimon();
+        };
+
+        if (mishimonJugador.mapaFoto.complete) {
+            pintarMishimon();
+        }
 
         seleccionarMascotaEnemigo();
     } else {
@@ -298,5 +318,111 @@ function aleatorio(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+// MOVIMIENTO DE MI PERSONAJE
+let mishimonJugador = null;
+let enemigoSeleccionado =null;
+let intervaloMovimiento;
+
+// Función para iniciar el movimiento continuo
+function iniciarMovimiento(direccion) {
+    detenerMovimiento(); 
+
+    intervaloMovimiento = setInterval(() => {
+        moverMishimon(direccion);
+    }, 50); // Se ejecuta cada 50ms para un movimiento fluido
+}
+
+// Función para detener el movimiento
+function detenerMovimiento() {
+    clearInterval(intervaloMovimiento);
+}
+
+let fondoMapa = new Image();
+fondoMapa.src = "./assets/escene.png";
+
+// Función para dibujar el mishimon
+function pintarMishimon() {
+    if (!mishimonJugador) return; 
+
+    lienzo.clearRect(0, 0, mapa.width, mapa.height);
+    lienzo.drawImage(fondoMapa, 0, 0, mapa.width, mapa.height);
+
+    // 🔹 Dibujar al Mishimon del jugador
+    lienzo.drawImage(
+        mishimonJugador.mapaFoto,
+        mishimonJugador.x,
+        mishimonJugador.y,
+        mishimonJugador.ancho,
+        mishimonJugador.alto
+    );
+    // 🔹 Dibujar al enemigo en su posición aleatoria
+    lienzo.drawImage(
+        enemigoSeleccionado.mapaFoto,
+        enemigoSeleccionado.x,
+        enemigoSeleccionado.y,
+        enemigoSeleccionado.ancho,
+        enemigoSeleccionado.alto
+    );
+}
+
+// Función para mover al mishimon en cualquier dirección
+function moverMishimon(direccion) {
+    if (!mishimonJugador) return; 
+    const velocidad = 5; 
+
+    if (direccion === "up") mishimonJugador.y -= velocidad;
+    if (direccion === "down") mishimonJugador.y += velocidad;
+    if (direccion === "left") mishimonJugador.x -= velocidad;
+    if (direccion === "right") mishimonJugador.x += velocidad;
+
+    pintarMishimon();
+}
+
+// CHAT GPT ME DICE QUE LO PONGA EN INICIAR JUEGO PERO NO ME FUNCIONA ALLI
+window.onload = function () {
+    pintarMishimon(); // Dibuja el personaje cuando el canvas aparece
+};
+
+// Función para ajustar el tamaño del canvas dinámicamente
+function ajustarCanvas() {
+    const anchoDeseado = window.innerWidth * 0.8; // Ocupa el 80% del ancho de la pantalla
+    const altoDeseado = window.innerHeight * 0.5; // Ocupa el 50% del alto de la pantalla
+
+    // Mantener una proporción cuadrada
+    const tamañoFinal = Math.min(anchoDeseado, altoDeseado, 500); // Máximo 500px
+
+    // Asignar el tamaño
+    mapa.width = tamañoFinal;
+    mapa.height = tamañoFinal;
+
+    // Redibujar el Mishimon
+    pintarMishimon();
+}
+
+function detectarTeclaPresionada(event) {
+    const tecla = event.key.toLowerCase();
+
+    if (tecla === "w" || tecla === "arrowup") iniciarMovimiento("up");
+    if (tecla === "s" || tecla === "arrowdown") iniciarMovimiento("down");
+    if (tecla === "a" || tecla === "arrowleft") iniciarMovimiento("left");
+    if (tecla === "d" || tecla === "arrowright") iniciarMovimiento("right");
+}
+
+// 🔹 Detener el movimiento cuando se suelta la tecla
+function detectarTeclaSoltada(event) {
+    detenerMovimiento();
+}
+
+// Agregar eventos de teclado
+window.addEventListener("keydown", detectarTeclaPresionada);
+window.addEventListener("keyup", detectarTeclaSoltada);
+
+// Ajustar el canvas cuando la ventana se redimensiona
+window.addEventListener("resize", ajustarCanvas);
+window.addEventListener("load", ajustarCanvas);
 // Iniciar juego
 window.addEventListener("load", iniciarJuego);
+
+
+
+

@@ -63,7 +63,7 @@ input:checked + label{
 
 .tajeta-de-mishimon:hover{
     color: #E7BCDE;
-    background-color: #67729D;
+    background-color: #BB9CC0;
 }
 
 #boton-mascota{
@@ -154,58 +154,6 @@ input:checked + label{
     width: 100px; /* 🔹 Ajuste de tamaño de imagen */
     height: 100px; /* 🔹 Se asegura de que la imagen tenga altura fija */
     object-fit: cover; /* 🔹 Asegura que la imagen no se distorsione */
-}
-
-#ver-mapa{
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-#mapa{
-    width: 80vw; /* 🔥 80% del ancho de la pantalla */
-    height: auto;
-    max-width: 500px; /* 🔥 Máximo de 500px */
-    border: 2px solid #67729D;
-}
-
-.control-direccional {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    margin-top: 20px;
-}
-
-.fila {
-    display: flex;
-    gap: 5px;
-}
-
-.flecha {
-    width: 15vw;
-    height: 15vw;
-    max-width: 50px; 
-    max-height: 50px;
-    font-size: 1.5rem;
-    border: none;
-    background-color: #BB9CC0;
-    color: #67729D;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
-
-.flecha:hover {
-    background-color: #67729D;
-    color:#FED9ED
-}
-
-.boton-central {
-    width: 50px;
-    height: 50px;
-    font-size: 20px;
-    border-radius: 30%;
 }
 
 /* 🔥 Estilos responsivos para que se apilen en pantallas pequeñas */
