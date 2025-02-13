@@ -39,7 +39,23 @@ function revisarVidas(vidasJugador, vidasEnemigo, rondasJugadas) {
 
 // Función para reiniciar el juego
 function reiniciarJuego() {
-    location.reload();
+    // ✅ Restablecer variables del juego
+    vidasJugador = 3;
+    vidasEnemigo = 3;
+    rondasJugadas = 0;
+
+    // ✅ Volver a la pantalla de selección sin recargar la página
+    document.getElementById("seleccionar-mascota").style.display = "flex";
+    document.getElementById("ver-mapa").style.display = "none";
+    document.getElementById("reiniciar").style.display = "none";
+
+    // ✅ Limpiar ataques anteriores
+    document.getElementById("ataques-del-jugador").innerHTML = "";
+    document.getElementById("ataques-enemigo").innerHTML = "";
+    document.getElementById("resultado").innerHTML = "";
+
+    // ✅ Reiniciar Mishimon del jugador
+    mishimonJugador = null;
 }
 
 // 📌 Exportar funciones para usarlas en otros archivos

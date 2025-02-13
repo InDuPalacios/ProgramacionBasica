@@ -1,5 +1,6 @@
 import { Mishimon, growmon, firemon, waltermon, dewatermon, defiremon, dearthmon } from './datamishimon.js';
 import { crearMensaje, crearMensajeFinal, reiniciarJuego, revisarVidas } from './ui.js';
+import { asignarMishimonJugador, iniciarMapa } from './mapa.js';
  
 
 // Variables globales
@@ -28,6 +29,7 @@ function iniciarJuego() {
     document.getElementById("seleccionar-ataque").style.display = "none";
     document.getElementById("reiniciar").style.display = "none";
     document.getElementById("ataques-enemigo-disponibles").style.display = "none";
+    document.getElementById("ver-mapa").style.display = "none";
 
     mishimones.forEach((mishimon) => {
         let opcionDeMishimones = `
@@ -57,7 +59,10 @@ function seleccionarMascotaJugador() {
         mostrarBotonesAtaque();
 
         document.getElementById("seleccionar-mascota").style.display = "none";
-        document.getElementById("seleccionar-ataque").style.display = "flex";
+        //document.getElementById("seleccionar-ataque").style.display = "flex";
+        document.getElementById("ver-mapa").style.display = "flex";
+
+        asignarMishimonJugador(seleccionada);
 
         seleccionarMascotaEnemigo();
     } else {

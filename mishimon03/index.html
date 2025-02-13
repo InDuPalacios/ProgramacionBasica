@@ -2,7 +2,8 @@
 <html lang="es">
     <head>
         <meta charset="utf-8"/>
-        <title>Mishimon</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mishimon Version 03</title>
         <link rel="stylesheet" href="./styles.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +20,37 @@
             </div>
 
             <button id="boton-mascota">Seleccionar</button>
+        </section>
+
+        <section id="ver-mapa">
+            <h1 class="titulo"> Recorre el mapa con tu Mishi </h1>
+            <canvas id="mapa"></canvas>
+        
+            <div class="control-direccional">
+                <button class="flecha arriba" 
+                    onmousedown="iniciarMovimiento('up')" onmouseup="detenerMovimiento()" onmouseleave="detenerMovimiento()" 
+                    ontouchstart="iniciarMovimiento('up')" ontouchend="detenerMovimiento()">⬆
+                </button>
+                
+                <div class="fila">
+                    <button class="flecha izquierda" 
+                        onmousedown="iniciarMovimiento('left')" onmouseup="detenerMovimiento()" onmouseleave="detenerMovimiento()" 
+                        ontouchstart="iniciarMovimiento('left')" ontouchend="detenerMovimiento()">⬅
+                    </button>
+        
+                    <button class="boton-central">🎮</button> <!-- Botón decorativo -->
+        
+                    <button class="flecha derecha" 
+                        onmousedown="iniciarMovimiento('right')" onmouseup="detenerMovimiento()" onmouseleave="detenerMovimiento()" 
+                        ontouchstart="iniciarMovimiento('right')" ontouchend="detenerMovimiento()">➡
+                    </button>
+                </div>
+                
+                <button class="flecha abajo" 
+                    onmousedown="iniciarMovimiento('down')" onmouseup="detenerMovimiento()" onmouseleave="detenerMovimiento()" 
+                    ontouchstart="iniciarMovimiento('down')" ontouchend="detenerMovimiento()">⬇
+                </button>
+            </div>
         </section>
 
         <section id="seleccionar-ataque">

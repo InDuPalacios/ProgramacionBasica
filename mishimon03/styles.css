@@ -1,5 +1,4 @@
-/* NOTA MENTAL: "mientras consolido la información mejor tenerlo a la mano por si lo necesito"
-Cuando quiero crear un vinculo entre el html y css utilizare selectores existen de tre tipos
+/* selectores 
 h =  de tipo que es la misma etiqueta del html
 .title = de clase y se utiliza con un punto
 #tittle= de id que se nombra con un # */
@@ -10,7 +9,7 @@ body{
 }
 
 #seleccionar-mascota{
-    display: flex;
+    display: flex ; 
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -27,6 +26,8 @@ body{
 
 .tarjetas, .tarjetas-ataques{
    display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
    gap: 10px;
 }
 
@@ -75,6 +76,13 @@ input:checked + label{
     border: none;
     width: 560px;
     font-family: 'Fira Sans Condensed', sans-serif;
+
+    width: 80%;
+    max-width: 300px;
+    min-width: 200px;
+    text-align: center;
+    font-size: 18px;
+    transition: all 0.3s ease-in-out;
 }
 
 #seleccionar-ataque{
@@ -156,11 +164,32 @@ input:checked + label{
     object-fit: cover; /* 🔹 Asegura que la imagen no se distorsione */
 }
 
+#ver-mapa{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#mapa{
+    display: block;
+    margin: auto;
+    width: 80vw;
+    height: auto;
+    max-width: 500px; 
+    max-height: 500px; 
+    border: 2px solid #67729D;
+}
+
 /* 🔥 Estilos responsivos para que se apilen en pantallas pequeñas */
 @media (max-width: 480px) {
     .ataques {
         flex-direction: column;
         align-items: center;
+    }
+    #boton-mascota {
+        width: 90%; /* 🔥 Más ancho en móviles */
+        font-size: 16px; /* 🔹 Reduce el tamaño de la fuente en pantallas pequeñas */
     }
 }
 
@@ -168,11 +197,10 @@ input:checked + label{
     .tarjetas{
         flex-direction: column;
     }
-}
-
-@media(max-width:360px){
-    .tarjetas-ataques{
-        flex-direction: column;
+    #boton-mascota {
+        width: 100%;
+        max-width: 250px;
+        font-size: 15px;
     }
 }
 
