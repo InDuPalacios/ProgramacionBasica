@@ -23,8 +23,6 @@ const contenedorAtaquesEnemigoDisponibles = document.getElementById("ataques-ene
 mishimones.push(waltermon, growmon, firemon)
 enemigos.push(dewatermon, defiremon, dearthmon);
 
-
-// Función que inicia el juego
 function iniciarJuego() {
     document.getElementById("seleccionar-ataque").style.display = "none";
     document.getElementById("reiniciar").style.display = "none";
@@ -45,7 +43,6 @@ function iniciarJuego() {
     botonReiniciar.addEventListener("click", reiniciarJuego);
 }
 
-// Función para seleccionar la mascota
 function seleccionarMascotaJugador() {
     const seleccionada = mishimones.find(m => document.getElementById(m.nombre).checked);
 
@@ -63,6 +60,11 @@ function seleccionarMascotaJugador() {
         document.getElementById("ver-mapa").style.display = "flex";
 
         asignarMishimonJugador(seleccionada);
+        seleccionada.mapaFoto = new Image();
+        seleccionada.mapaFoto.src = seleccionada.foto;
+        seleccionada.mapaFoto.onload = () => {
+            iniciarMapa();
+        };
 
         seleccionarMascotaEnemigo();
     } else {
@@ -111,7 +113,6 @@ function mostrarBotonesAtaque() {
     });
 }
 
-// 🔹 Función para mostrar los ataques restantes del enemigo con estilos
 function mostrarAtaquesEnemigo() {
     // Limpiamos solo los botones, sin afectar el subtítulo
     contenedorAtaquesEnemigoDisponibles.querySelectorAll("button").forEach(boton => boton.remove());
@@ -130,8 +131,6 @@ function mostrarAtaquesEnemigo() {
     });
 }
 
-
-//  Función para seleccionar la mascota enemiga
 function seleccionarMascotaEnemigo() {
     const indiceEnemigo = aleatorio(0, enemigos.length - 1);
     const enemigo = enemigos[indiceEnemigo];
@@ -148,7 +147,6 @@ function seleccionarMascotaEnemigo() {
     mostrarAtaquesEnemigo();
 }
 
-//  Función para que el enemigo elija un ataque aleatorio
 function ataqueAleatorioEnemigo() {
     // Si no hay ataques disponibles, restaurarlos
     if (ataquesEnemigoDisponibles.every(a => a.usado)) {
@@ -167,7 +165,6 @@ function ataqueAleatorioEnemigo() {
     combate();
 }
 
-// Función de combate
 function combate() {
     const resultadoTexto = 
         (ataqueJugador === ataqueEnemigo) ? "Es un EMPATE!!"

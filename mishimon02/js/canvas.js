@@ -1,3 +1,7 @@
+// canvas.js
+
+import { iniciarMovimiento, detenerMovimiento, moverMishimon } from "./movimiento.js";
+
 const mapa = document.getElementById("mapa");
 let lienzo = mapa.getContext("2d");
 let mishimonJugador = null;

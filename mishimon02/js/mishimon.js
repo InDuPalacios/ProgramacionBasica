@@ -1,3 +1,5 @@
+// mishimon.js, archivo main
+
 // Variables globales
 const contenedorTarjetas = document.getElementById('contenedorTarjetas');
 const botonMascotaJugador = document.getElementById("boton-mascota");
