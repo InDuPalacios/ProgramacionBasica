@@ -3,6 +3,7 @@ import { iniciarMovimiento, detenerMovimiento, moverMishimon } from "./movimient
 
 let lienzo, mapa, fondoMapa;
 let mishimonJugador = null;
+let mishimonEnemigo = null;
 
 function iniciarMapa() {
     mapa = document.getElementById("mapa");
@@ -31,29 +32,51 @@ function asignarMishimonJugador(mishimon) {
     mishimonJugador.mapaFoto.src = mishimon.foto;
 }
 
+function asignarMishimonEnemigo(mishimon) {
+    mishimonEnemigo = {
+        nombre: mishimon.nombre,
+        mapaFoto: new Image(),
+        x: 300, // Posición inicial
+        y: 300,
+        ancho: 80,
+        alto: 80,
+    };
+    mishimonEnemigo.mapaFoto.src = mishimon.foto;
+}
+
 function actualizarCanvas() {
-    pintarMishimon();
+    pintarMishimones();
     requestAnimationFrame(actualizarCanvas);
 }
 
-
-function pintarMishimon() {
-    if (!mishimonJugador || !mishimonJugador.mapaFoto.complete) return;
-
+function pintarMishimones() {
     lienzo.clearRect(0, 0, mapa.width, mapa.height);
     lienzo.drawImage(fondoMapa, 0, 0, mapa.width, mapa.height);
 
-    // 🔥 Dibujar el Mishimon del jugador ajustado al tamaño del canvas
-    lienzo.drawImage(
-        mishimonJugador.mapaFoto,
-        mishimonJugador.x,
-        mishimonJugador.y,
-        mishimonJugador.ancho,
-        mishimonJugador.alto
-    );
+    // Dibujar el Mishimon del jugador
+    if (mishimonJugador && mishimonJugador.mapaFoto.complete) {
+        lienzo.drawImage(
+            mishimonJugador.mapaFoto,
+            mishimonJugador.x,
+            mishimonJugador.y,
+            mishimonJugador.ancho,
+            mishimonJugador.alto
+        );
+    }
+
+    // Dibujar el Mishimon enemigo
+    if (mishimonEnemigo && mishimonEnemigo.mapaFoto.complete) {
+        lienzo.drawImage(
+            mishimonEnemigo.mapaFoto,
+            mishimonEnemigo.x,
+            mishimonEnemigo.y,
+            mishimonEnemigo.ancho,
+            mishimonEnemigo.alto
+        );
+    }
 }
 
-
+// Ajustes de canvas para responsive
 function ajustarCanvas() {
     const anchoDeseado = window.innerWidth * 0.8;
     const altoDeseado = window.innerHeight * 0.5;
@@ -63,7 +86,7 @@ function ajustarCanvas() {
     mapa.height = tamañoFinal;
 
     ajustarElementosCanvas(tamañoFinal);
-    pintarMishimon();
+    pintarMishimones();
 }
 
 
@@ -75,4 +98,6 @@ function ajustarElementosCanvas(nuevoTamaño) {
 }
 
 // Exportar funciones necesarias
-export { iniciarMapa, asignarMishimonJugador, pintarMishimon, mishimonJugador };
+export { iniciarMapa, asignarMishimonJugador, asignarMishimonEnemigo, pintarMishimones, mishimonJugador, mishimonEnemigo };
+
+

@@ -8,13 +8,19 @@ class Mishimon {
     }
 }
 
-// 📌 Creación de los Mishimones
-let growmon = new Mishimon('Growmon', './assets/mishimon__growmon.webp', 5);
-let firemon = new Mishimon('Firemon', './assets/mishimon_firemon.webp', 5);
-let waltermon = new Mishimon('Waltermon', './assets/mishimon__waltermon.webp', 5);
-let dewatermon = new Mishimon('Dewatermon', './assets/mishimon__dwather.webp', 5);
-let defiremon = new Mishimon('Defiremon', './assets/mishimon_defire.webp', 5);
-let dearthmon = new Mishimon('Dearthmon', './assets/mishimon_desheet.webp', 5);
+// 📌 Creación de los Mishimones del jugador
+let mishimonJugador = [
+    new Mishimon('Waltermon', './assets/mishimon__waltermon.webp', 5),
+    new Mishimon('Growmon', './assets/mishimon__growmon.webp', 5),
+    new Mishimon('Firemon', './assets/mishimon_firemon.webp', 5)
+];
+
+// 📌 Creación de los Mishimones enemigos
+let mishimonEnemigo = [
+    new Mishimon('Dewatermon', './assets/mishimon__dwather.webp', 5),
+    new Mishimon('Defiremon', './assets/mishimon_defire.webp', 5),
+    new Mishimon('Dearthmon', './assets/mishimon_desheet.webp', 5)
+];
 
 // 📌 Asignación de ataques
 const ataques = {
@@ -23,53 +29,45 @@ const ataques = {
     tierra: { nombre: '🌱 Tierra', id: 'boton-tierra' }
 };
 
-dewatermon.ataques.push(
-    { nombre: '💧 Agua', id: 'boton-agua' },
-    { nombre: '💧 Agua', id: 'boton-agua' },
-    { nombre: '💧 Agua', id: 'boton-agua' },
-    { nombre: '🔥 Fuego', id: 'boton-fuego' },
-    { nombre: '🌱 Tierra', id: 'boton-tierra' }
-);
+const asignarAtaques = (mishimon, tipo) => {
+    if (tipo === 'agua') {
+        mishimon.ataques.push(
+            ataques.agua,
+            ataques.agua,
+            ataques.agua,
+            ataques.fuego,
+            ataques.tierra
+        );
+    } else if (tipo === 'tierra') {
+        mishimon.ataques.push(
+            ataques.tierra,
+            ataques.tierra,
+            ataques.tierra,
+            ataques.fuego,
+            ataques.agua
+        );
+    } else if (tipo === 'fuego') {
+        mishimon.ataques.push(
+            ataques.fuego,
+            ataques.fuego,
+            ataques.fuego,
+            ataques.agua,
+            ataques.tierra
+        );
+    }
+};
 
-dearthmon.ataques.push(
-    { nombre: '🌱 Tierra', id: 'boton-tierra' },
-    { nombre: '🌱 Tierra', id: 'boton-tierra' },
-    { nombre: '🌱 Tierra', id: 'boton-tierra' },
-    { nombre: '🔥 Fuego', id: 'boton-fuego' },
-    { nombre: '💧 Agua', id: 'boton-agua' }
-);
+// Asignar ataques a cada Mishimon
+asignarAtaques(mishimonJugador[0], 'agua');
+asignarAtaques(mishimonJugador[1], 'tierra');
+asignarAtaques(mishimonJugador[2], 'fuego');
+asignarAtaques(mishimonEnemigo[0], 'agua');
+asignarAtaques(mishimonEnemigo[1], 'fuego');
+asignarAtaques(mishimonEnemigo[2], 'tierra');
 
-defiremon.ataques.push(
-    { nombre: '🔥 Fuego', id: 'boton-fuego' },
-    { nombre: '🔥 Fuego', id: 'boton-fuego' },
-    { nombre: '🔥 Fuego', id: 'boton-fuego' },
-    { nombre: '💧 Agua', id: 'boton-agua' },
-    { nombre: '🌱 Tierra', id: 'boton-tierra' }
-);
-
-waltermon.ataques.push(
-    { nombre: '💧 Agua', id: 'boton-agua' },
-    { nombre: '💧 Agua', id: 'boton-agua' },
-    { nombre: '💧 Agua', id: 'boton-agua' },
-    { nombre: '🔥 Fuego', id: 'boton-fuego' },
-    { nombre: '🌱 Tierra', id: 'boton-tierra' }
-);
-
-growmon.ataques.push(
-    { nombre: '🌱 Tierra', id: 'boton-tierra' },
-    { nombre: '🌱 Tierra', id: 'boton-tierra' },
-    { nombre: '🌱 Tierra', id: 'boton-tierra' },
-    { nombre: '🔥 Fuego', id: 'boton-fuego' },
-    { nombre: '💧 Agua', id: 'boton-agua' }
-);
-
-firemon.ataques.push(
-    { nombre: '🔥 Fuego', id: 'boton-fuego' },
-    { nombre: '🔥 Fuego', id: 'boton-fuego' },
-    { nombre: '🔥 Fuego', id: 'boton-fuego' },
-    { nombre: '💧 Agua', id: 'boton-agua' },
-    { nombre: '🌱 Tierra', id: 'boton-tierra' }
-);
+// Variables globales
+let mishimones = mishimonJugador;
+let enemigos = mishimonEnemigo;
 
 // 📌 Exportar variables para usarlas en otros archivos
-export { Mishimon, growmon, firemon, waltermon, dewatermon, defiremon, dearthmon };
+export { Mishimon, mishimonJugador, mishimonEnemigo, mishimones, enemigos };

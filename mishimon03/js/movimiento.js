@@ -1,4 +1,4 @@
-import { pintarMishimon, mishimonJugador } from "./mapa.js"; 
+import { pintarMishimones, mishimonJugador } from "./mapa.js"; 
 
 let intervaloMovimiento;
 
@@ -8,7 +8,7 @@ function iniciarMovimiento(direccion) {
 
     intervaloMovimiento = setInterval(() => {
         moverMishimon(direccion);
-        pintarMishimon();
+        pintarMishimones();
     }, 50);
 }
 
@@ -41,57 +41,7 @@ function moverMishimon(direccion) {
     }
 }
 
-// 🔹 Exponer funciones en `window` para que `index.html` las reconozca
 window.iniciarMovimiento = iniciarMovimiento;
 window.detenerMovimiento = detenerMovimiento;
-
-// 🔹 Agregar controles de teclado para mover el Mishimon
-window.addEventListener("keydown", (event) => {
-    switch (event.key) {
-        case "ArrowUp":
-            iniciarMovimiento("up");
-            break;
-        case "ArrowDown":
-            iniciarMovimiento("down");
-            break;
-        case "ArrowLeft":
-            iniciarMovimiento("left");
-            break;
-        case "ArrowRight":
-            iniciarMovimiento("right");
-            break;
-    }
-});
-
-window.addEventListener("keyup", () => {
-    detenerMovimiento();
-});
-
-
-document.addEventListener("DOMContentLoaded", () => {
-    const botones = {
-        up: document.querySelector(".flecha.arriba"),
-        down: document.querySelector(".flecha.abajo"),
-        left: document.querySelector(".flecha.izquierda"),
-        right: document.querySelector(".flecha.derecha"),
-    };
-
-    Object.entries(botones).forEach(([direccion, boton]) => {
-        if (!boton) {
-            console.error(`❌ Error: No se encontró el botón ${direccion}. Verifica tu HTML.`);
-            return;
-        }
-
-        boton.addEventListener("mousedown", () => iniciarMovimiento(direccion));
-        boton.addEventListener("mouseup", detenerMovimiento);
-        boton.addEventListener("mouseleave", detenerMovimiento);
-        
-        boton.addEventListener("touchstart", (e) => {
-            e.preventDefault(); // Evita el zoom o scroll accidental en móviles
-            iniciarMovimiento(direccion);
-        });
-        boton.addEventListener("touchend", detenerMovimiento);
-    });
-});
 
 export { iniciarMovimiento, detenerMovimiento, moverMishimon };

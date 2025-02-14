@@ -1,6 +1,7 @@
-import { Mishimon, growmon, firemon, waltermon, dewatermon, defiremon, dearthmon } from './datamishimon.js';
+import { mishimonJugador, mishimonEnemigo } from './datamishimon.js';
+
 import { crearMensaje, crearMensajeFinal, reiniciarJuego, revisarVidas } from './ui.js';
-import { asignarMishimonJugador, iniciarMapa } from './mapa.js';
+import { asignarMishimonJugador, asignarMishimonEnemigo, iniciarMapa } from './mapa.js';
  
 
 // Variables globales
@@ -9,8 +10,8 @@ const contenedorTarjetas = document.getElementById('contenedorTarjetas');
 const botonMascotaJugador = document.getElementById("boton-mascota");
 const botonReiniciar = document.getElementById("boton-reiniciar");
 
-let mishimones = [];
-let enemigos = [];
+let mishimones = mishimonJugador;
+let enemigos = mishimonEnemigo;
 let ataqueJugador, ataqueEnemigo;
 let vidasJugador = 3, vidasEnemigo = 3;
 let ataquesJugadorDisponibles = [], ataquesEnemigoDisponibles = [];
@@ -19,9 +20,6 @@ let rondasJugadas = 0;
 const contenedorAtaquesJugador = document.getElementById("ataques-del-jugador");
 const contenedorAtaquesEnemigo = document.getElementById("ataques-del-enemigo");
 const contenedorAtaquesEnemigoDisponibles = document.getElementById("ataques-enemigo-disponibles");
-
-mishimones.push(waltermon, growmon, firemon)
-enemigos.push(dewatermon, defiremon, dearthmon);
 
 function iniciarJuego() {
     document.getElementById("seleccionar-ataque").style.display = "none";
@@ -135,7 +133,7 @@ function seleccionarMascotaEnemigo() {
     const indiceEnemigo = aleatorio(0, enemigos.length - 1);
     const enemigo = enemigos[indiceEnemigo];
 
-    ataquesEnemigoDisponibles = [...enemigo.ataques]; 
+    asignarMishimonEnemigo(enemigo); 
 
     let contenedorMascotaEnemigo = document.getElementById("mascota-enemigo");
     contenedorMascotaEnemigo.innerHTML = `
