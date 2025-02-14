@@ -1,5 +1,5 @@
 //mapa.js
-import { iniciarMovimiento, detenerMovimiento, moverMishimon } from "./movimiento.js";
+import { detectarColision, mostrarVentanaEmergente, cerrarVentanaEmergente } from "./batalla.js";
 
 let lienzo, mapa, fondoMapa;
 let mishimonJugador = null;
@@ -12,40 +12,78 @@ function iniciarMapa() {
     fondoMapa.src = "./assets/escene.png";
 
     fondoMapa.onload = () => {
-        ajustarCanvas(); // 🔥 Ajustar el tamaño del canvas antes de empezar
+        ajustarCanvas(); // 🔥 Ajustar tamaño antes de empezar
         requestAnimationFrame(actualizarCanvas);
+
+        // 💡 Esperar un pequeño tiempo antes de generar al enemigo
+        setTimeout(() => {
+            if (!mishimonEnemigo) {
+                asignarMishimonEnemigo({ 
+                    nombre: "Enemigo", 
+                    foto: "./assets/mishimon-enemigo.png" 
+                });
+            }
+        }, 100); // Esperamos 100ms para asegurarnos de que el mapa tenga dimensiones
     };
 
     // Ajustar el canvas cuando se cambia el tamaño de la ventana
     window.addEventListener("resize", ajustarCanvas);
 }
 
+
 function asignarMishimonJugador(mishimon) {
-    mishimonJugador = {
-        nombre: mishimon.nombre,
-        mapaFoto: new Image(),
-        x: 100, // Posición inicial
-        y: 100,
-        ancho: 50,
-        alto: 50,
-    };
-    mishimonJugador.mapaFoto.src = mishimon.foto;
+    if (!mishimonJugador) {
+        mishimonJugador = {
+            nombre: mishimon.nombre,
+            mapaFoto: new Image(),
+            x: 100,
+            y: 100,
+            ancho: 50,
+            alto: 50,
+        };
+        mishimonJugador.mapaFoto.src = mishimon.foto;
+    }
 }
 
 function asignarMishimonEnemigo(mishimon) {
+    // 💡 Asegurarse de que el mapa tiene dimensiones válidas antes de asignar posiciones aleatorias
+    if (!mapa || mapa.width === 0 || mapa.height === 0) {
+        console.warn("El mapa aún no tiene dimensiones correctas. Reintentando...");
+        setTimeout(() => asignarMishimonEnemigo(mishimon), 50); // Reintenta después de 50ms
+        return;
+    }
+
+    const margen = 20;
+    const maxX = mapa.width - 80 - margen;
+    const maxY = mapa.height - 80 - margen;
+
     mishimonEnemigo = {
         nombre: mishimon.nombre,
         mapaFoto: new Image(),
-        x: 300, // Posición inicial
-        y: 300,
+        x: Math.random() * (maxX - margen) + margen, 
+        y: Math.random() * (maxY - margen) + margen,
         ancho: 80,
         alto: 80,
     };
+
     mishimonEnemigo.mapaFoto.src = mishimon.foto;
+
+    mishimonEnemigo.mapaFoto.onload = () => {
+        pintarMishimones();
+    };
+
+    mishimonEnemigo.mapaFoto.onerror = () => {
+        console.error("Error al cargar la imagen del enemigo.");
+    };
 }
 
+
 function actualizarCanvas() {
-    pintarMishimones();
+    if (mishimonJugador && mishimonEnemigo) { 
+        pintarMishimones();
+        detectarColision(mishimonJugador, mishimonEnemigo);
+    }
+
     requestAnimationFrame(actualizarCanvas);
 }
 
@@ -75,7 +113,6 @@ function pintarMishimones() {
         );
     }
 }
-
 // Ajustes de canvas para responsive
 function ajustarCanvas() {
     const anchoDeseado = window.innerWidth * 0.8;
@@ -95,6 +132,8 @@ function ajustarElementosCanvas(nuevoTamaño) {
     const escala = nuevoTamaño / 500;
     mishimonJugador.ancho = 80 * escala;
     mishimonJugador.alto = 80 * escala;
+    mishimonJugador.x = mishimonJugador.x * escala;
+    mishimonJugador.y = mishimonJugador.y * escala;
 }
 
 // Exportar funciones necesarias
