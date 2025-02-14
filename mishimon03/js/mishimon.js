@@ -1,7 +1,7 @@
 import { mishimonJugador, mishimonEnemigo } from './datamishimon.js';
 
 import { crearMensaje, crearMensajeFinal, reiniciarJuego, revisarVidas } from './ui.js';
-import { asignarMishimonJugador, asignarMishimonEnemigo, iniciarMapa } from './mapa.js';
+import { asignarMishimonJugador, iniciarMapa, generarEnemigos } from './mapa.js';
  
 
 // Variables globales
@@ -133,7 +133,7 @@ function seleccionarMascotaEnemigo() {
     const indiceEnemigo = aleatorio(0, enemigos.length - 1);
     const enemigo = enemigos[indiceEnemigo];
 
-    asignarMishimonEnemigo(enemigo); 
+    generarEnemigos(); 
 
     let contenedorMascotaEnemigo = document.getElementById("mascota-enemigo");
     contenedorMascotaEnemigo.innerHTML = `

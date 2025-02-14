@@ -1,12 +1,11 @@
-// ventanaEmergente.js
+// batalla.js
 
 function detectarColision(mishimonJugador, mishimonEnemigo) {
-    // Verificar si las áreas de los Mishimones se superponen
-    if (mishimonJugador.x < mishimonEnemigo.x + mishimonEnemigo.ancho &&
-        mishimonJugador.x + mishimonJugador.ancho > mishimonEnemigo.x &&
-        mishimonJugador.y < mishimonEnemigo.y + mishimonEnemigo.alto &&
-        mishimonJugador.y + mishimonJugador.alto > mishimonEnemigo.y) {
-        mostrarVentanaEmergente(); // Llamar a la función para mostrar el modal
+    const rangoProximidad = 30; // Define qué tan cerca deben estar
+
+    if (Math.abs(mishimonJugador.x - mishimonEnemigo.x) < rangoProximidad &&
+        Math.abs(mishimonJugador.y - mishimonEnemigo.y) < rangoProximidad) {
+        mostrarVentanaEmergente();
     }
 }
 
