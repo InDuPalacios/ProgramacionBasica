@@ -10,16 +10,16 @@ class Mishimon {
 
 // 📌 Creación de los Mishimones del jugador
 let mishimonJugador = [
-    new Mishimon('Waltermon', './assets/mishimon__waltermon.webp', 5),
-    new Mishimon('Growmon', './assets/mishimon__growmon.webp', 5),
-    new Mishimon('Firemon', './assets/mishimon_firemon.webp', 5)
+    new Mishimon('Waltermon', './assets/mishimon__waltermon.svg', 5),
+    new Mishimon('Growmon', './assets/mishimon__growmon.svg', 5),
+    new Mishimon('Firemon', './assets/mishimon_firemon.svg', 5)
 ];
 
 // 📌 Creación de los Mishimones enemigos
 let mishimonEnemigo = [
-    new Mishimon('Dewatermon', './assets/mishimon__dwather.webp', 5),
-    new Mishimon('Defiremon', './assets/mishimon_defire.webp', 5),
-    new Mishimon('Dearthmon', './assets/mishimon_desheet.webp', 5)
+    new Mishimon('Dewatermon', './assets/mishimon__dwather.svg', 5),
+    new Mishimon('Defiremon', './assets/mishimon_defire.svg', 5),
+    new Mishimon('Dearthmon', './assets/mishimon_desheet.svg', 5)
 ];
 
 // 📌 Asignación de ataques

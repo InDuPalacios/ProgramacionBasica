@@ -1,19 +1,22 @@
 import { detectarColision, mostrarVentanaEmergente, cerrarVentanaEmergente } from "./batalla.js";
-import { mishimonEnemigo } from "./datamishimon.js"; // Importando los enemigos correctos
+import { mishimonEnemigo } from "./class/characters/datamishimon.js"; // Importando los enemigos correctos
 
-let lienzo, mapa, fondoMapa;
+
+// TIENES QUE HACER QUE LOS BICHOS NO APAREZCAN UNO ENCIMA DE OTRO
+// QUE SE APAREZCAN DOS DE MANERA ALEATOREA PORQUE AHORA APARECEN TODOS
+let lienzo, canvasMapa, fondoMapa;
 let mishimonJugador = null;
 let mishimonesEnemigos = [];
 
 function iniciarMapa() {
-    mapa = document.getElementById("mapa");
+    canvasMapa = document.getElementById("canvasMapa");
 
-    if (!mapa) {
-        console.error("❌ Error: El mapa no está definido en el DOM.");
+    if (!canvasMapa) {
+        console.error("❌ Error: El canvasMapa no está definido en el DOM.");
         return;
     }
 
-    lienzo = mapa.getContext("2d");
+    lienzo = canvasMapa.getContext("2d");
     fondoMapa = new Image();
     fondoMapa.src = "./assets/escene.png";
 
@@ -44,7 +47,7 @@ function asignarMishimonJugador(mishimon) {
 }
 
 function generarEnemigos() {
-    if (!mapa) return;
+    if (!canvasMapa) return;
 
     mishimonesEnemigos = [];
 
@@ -54,8 +57,8 @@ function generarEnemigos() {
         let enemigo = {
             nombre: enemigoData.nombre,
             mapaFoto: new Image(),
-            x: Math.random() * (mapa.width - 50) || 50, // Evita NaN
-            y: Math.random() * (mapa.height - 50) || 50,
+            x: Math.random() * (canvasMapa.width - 50) || 50, // Evita NaN
+            y: Math.random() * (canvasMapa.height - 50) || 50,
             ancho: 50,
             alto: 50,
         };
@@ -78,10 +81,10 @@ function actualizarCanvas() {
 }
 
 function pintarMishimones() {
-    if (!lienzo || !mapa) return;
+    if (!lienzo || !canvasMapa) return;
 
-    lienzo.clearRect(0, 0, mapa.width, mapa.height);
-    lienzo.drawImage(fondoMapa, 0, 0, mapa.width, mapa.height);
+    lienzo.clearRect(0, 0, canvasMapa.width, canvasMapa.height);
+    lienzo.drawImage(fondoMapa, 0, 0, canvasMapa.width, canvasMapa.height);
 
     if (mishimonJugador && mishimonJugador.mapaFoto.complete) {
         lienzo.drawImage(
@@ -107,14 +110,14 @@ function pintarMishimones() {
 }
 
 function ajustarCanvas() {
-    if (!mapa) return;
+    if (!canvasMapa) return;
 
     const anchoDeseado = window.innerWidth * 0.8;
     const altoDeseado = window.innerHeight * 0.5;
     const tamañoFinal = Math.min(anchoDeseado, altoDeseado, 500);
 
-    mapa.width = tamañoFinal;
-    mapa.height = tamañoFinal;
+    canvasMapa.width = tamañoFinal;
+    canvasMapa.height = tamañoFinal;
 
     ajustarElementosCanvas(tamañoFinal);
     pintarMishimones();

@@ -27,10 +27,10 @@ window.addEventListener("keyup", () => {
 // 🔹 Capturar controles de botones físicos
 document.addEventListener("DOMContentLoaded", () => {
     const botones = {
-        up: document.querySelector(".flecha.arriba"),
-        down: document.querySelector(".flecha.abajo"),
-        left: document.querySelector(".flecha.izquierda"),
-        right: document.querySelector(".flecha.derecha"),
+        up: document.querySelector(".class-btn-flecha.class-type-arriba"),
+        down: document.querySelector(".class-btn-flecha.class-type-abajo"),
+        left: document.querySelector(".class-btn-flecha.class-type-izquierda"),
+        right: document.querySelector(".class-btn-flecha.class-type-derecha"),
     };
 
     Object.entries(botones).forEach(([direccion, boton]) => {

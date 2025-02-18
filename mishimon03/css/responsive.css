@@ -1,0 +1,22 @@
+/* 🔥 Estilos responsivos para que se apilen en pantallas pequeñas */
+@media (max-width: 480px) {
+    .ataques {
+        flex-direction: column;
+        align-items: center;
+    }
+    button#btnMascota {
+        width: 90%; /* 🔥 Más ancho en móviles */
+        font-size: 16px; /* 🔹 Reduce el tamaño de la fuente en pantallas pequeñas */
+    }
+}
+
+@media(max-width:360px){
+    .tarjetas{
+        flex-direction: column;
+    }
+    button#btnMascota {
+        width: 100%;
+        max-width: 250px;
+        font-size: 15px;
+    }
+}

@@ -11,13 +11,13 @@ function detectarColision(mishimonJugador, mishimonEnemigo) {
 
 // Función para mostrar el modal
 function mostrarVentanaEmergente() {
-    const ventana = document.getElementById("ventanaEmergente");
+    const ventana = document.getElementById("divVentanaEmergente");
     ventana.style.display = "block";
 }
 
 // Función para cerrar el modal
 function cerrarVentanaEmergente() {
-    const ventana = document.getElementById("ventanaEmergente");
+    const ventana = document.getElementById("divVentanaEmergente");
     ventana.style.display = "none";
 }
 

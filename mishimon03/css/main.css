@@ -1,30 +1,32 @@
-/* selectores 
-h =  de tipo que es la misma etiqueta del html
-.title = de clase y se utiliza con un punto
-#tittle= de id que se nombra con un # */
+/* 
+    selectores 
+        h =  de tipo que es la misma etiqueta del html
+        .title = de clase y se utiliza con un punto
+        #tittle= de id que se nombra con un # 
+*/
 
 body{
     font-family: 'Fira Sans Condensed', sans-serif;
     background-color: #FED9ED;
 }
 
-#seleccionar-mascota{
+section#sectionSeleccionarMascota{
     display: flex ; 
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.titulo{
+h1.titulo{
     color: #67729D ;
 }
 
-.subtitulo{
+h2.subtitulo{
     color: #BB9CC0 ;
     font-size: 18px;
 }
 
-.tarjetas, .tarjetas-ataques{
+div.tarjetas, div.class-div-tarjetas-ataques{
    display: flex;
    flex-wrap: wrap;
    justify-content: center;
@@ -57,7 +59,7 @@ input:checked + label{
     color:#E7BCDE;
 }
 
-#boton-mascota:hover{
+button#btnMascota:hover{
     background-color: #67729D;
     color: #E7BCDE;
 }
@@ -67,7 +69,7 @@ input:checked + label{
     background-color: #BB9CC0;
 }
 
-#boton-mascota{
+button#btnMascota{
     padding: 10px;
     margin-top: 20px;
     background-color: #E7BCDE;
@@ -85,7 +87,7 @@ input:checked + label{
     transition: all 0.3s ease-in-out;
 }
 
-#seleccionar-ataque{
+section#sectionSeleccionarAtaque{
     flex-direction: column;
     align-items: center;
 }
@@ -101,7 +103,7 @@ input:checked + label{
     font-family: 'Fira Sans Condensed', sans-serif;
 }
 
-#mensajes{
+div#divMensajes{
     width: 330px;
     color: #67729D;
     background-color: #E7BCDE;
@@ -115,7 +117,7 @@ input:checked + label{
     align-items: center;
 }
 
-#boton-reiniciar{
+button#btnReiniciar{
     padding: 10px;
     margin: 5px;
     width: 100px;
@@ -126,14 +128,14 @@ input:checked + label{
     font-family: 'Fira Sans Condensed', sans-serif;
 }
 
-.ataques {
+div#divAreaAtaques {
     display: flex;
     justify-content: center;
     gap: 20px; /* Espaciado entre los dos contenedores */
     flex-wrap: wrap; /* Permite que los elementos se apilen si la pantalla es pequeña */
 }
 
-.ataques-jugador, .ataques-enemigo {
+.class-div-ataques-jugador, .class-div-ataques-enemigo {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -147,7 +149,7 @@ input:checked + label{
     width: 180px; /* 🔹 Define un ancho fijo */
 }
 
-#mascota-jugador, #mascota-enemigo {
+p#pAvatarMascotaJugador, p#pAvatarMascotaEnemigo {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -156,7 +158,7 @@ input:checked + label{
     overflow: hidden;
 }
 
-#mascota-jugador img, #mascota-enemigo img {
+p#pAvatarMascotaJugador img, p#pAvatarMascotaEnemigo img {
     border-radius: 10px;
     margin-bottom: 5px;
     width: 100px; /* 🔹 Ajuste de tamaño de imagen */
@@ -164,25 +166,46 @@ input:checked + label{
     object-fit: cover; /* 🔹 Asegura que la imagen no se distorsione */
 }
 
-#ver-mapa{
+section#sectionVerMapa{
     display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-#mapa{
+section#sectionVerMapa > #divAreaJuego{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 50px;
+}
+
+div#divLienzoMapa{
+    width: 100%;
+    max-width: 550px;
+    min-width: 300px;
+    height: 80vh;
+    max-height: 550px;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas#canvasMapa{
     display: block;
-    margin: auto;
+    /* margin: auto;
     width: 80vw;
     height: auto;
     max-width: 500px; 
-    max-height: 500px; 
+    max-height: 500px;  */
+    width: 100%;
+    height: 100%;
     border: 2px solid #67729D;
 }
 
 /* 🔥 Estilos responsivos para los botones */
-.control-direccional {
+div#divAreaControlesDireccion {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -190,7 +213,7 @@ input:checked + label{
     margin-top: 20px;
 }
 
-.flecha {
+.class-btn-flecha {
     width: 15vw;
     height: 15vw;
     max-width: 50px; 
@@ -204,37 +227,14 @@ input:checked + label{
     transition: background 0.2s ease;
 }
 
-.flecha:hover {
+.class-btn-flecha:hover {
     background-color: #67729D;
     color:#FED9ED
 }
 
-.boton-central {
+.class-btn-central {
     width: 50px;
     height: 50px;
     font-size: 20px;
     border-radius: 30%;
-
-
-/* 🔥 Estilos responsivos para que se apilen en pantallas pequeñas */
-@media (max-width: 480px) {
-    .ataques {
-        flex-direction: column;
-        align-items: center;
-    }
-    #boton-mascota {
-        width: 90%; /* 🔥 Más ancho en móviles */
-        font-size: 16px; /* 🔹 Reduce el tamaño de la fuente en pantallas pequeñas */
-    }
-}
-
-@media(max-width:360px){
-    .tarjetas{
-        flex-direction: column;
-    }
-    #boton-mascota {
-        width: 100%;
-        max-width: 250px;
-        font-size: 15px;
-    }
 }
