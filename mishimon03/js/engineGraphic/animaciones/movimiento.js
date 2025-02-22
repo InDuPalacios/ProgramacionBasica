@@ -1,4 +1,4 @@
-import { pintarMishimones, mishimonJugador } from "./mapa.js"; 
+import { mishimonJugadorSet } from "../../ui/functions/ctrlMishimonGame.js"; 
 
 let intervaloMovimiento;
 
@@ -8,7 +8,6 @@ function iniciarMovimiento(direccion) {
 
     intervaloMovimiento = setInterval(() => {
         moverMishimon(direccion);
-        pintarMishimones();
     }, 50);
 }
 

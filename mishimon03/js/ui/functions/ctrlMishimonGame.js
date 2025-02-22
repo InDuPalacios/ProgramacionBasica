@@ -1,12 +1,44 @@
-// 📌 ui.js - Manejo de la interfaz del juego
-import { asignarMishimonJugador, iniciarMapa, generarEnemigos } from "../../mapa.js"
+// 📌 - Manejo de la interfaz del juego
+import { 
+    sectionSeleccionarAtaque,
+    sectionBtnReiniciar,
+    divAtaquesDisponiblesEnemigo,
+    sectionVerMapa,
+    divTarjetas,
+    mishimones,
+    enemigos,
+    mishimonJugadorSet,
+    mishimonEnemigoSet } from "../../data/sharedData.js"
+
+import { pintarMishimones } from "../../engineGraphic/mapa/mapa.js"
+
+import { iniciarMovimiento } from "../../engineGraphic/animaciones/movimiento.js"
+
 import { aleatorio } from "../../class/mechanics/iaEnemy.js"
+import { mostrarModalSeleccion, cerrarModal, confirmarSeleccion } from "../functions/confirmSelection.js";
+
+
+function ocultarSecciones() {
+    [
+        sectionSeleccionarAtaque, 
+        sectionBtnReiniciar, 
+        divAtaquesDisponiblesEnemigo, 
+        sectionVerMapa
+    ].forEach(section => section.style.display = "none");
+}
+
+function generarTarjetasMishimones() {
+    divTarjetas.innerHTML = mishimones.map(mishimon => `
+        <input type="radio" name="mascota" id="${mishimon.nombre}" />
+        <label class="tajeta-de-mishimon" for="${mishimon.nombre}">
+            <p>${mishimon.nombre}</p>
+            <img src="${mishimon.foto}" alt="${mishimon.nombre}">
+        </label>
+    `).join('');
+}
 
 function seleccionarMascotaJugador(
-    ataquesEnemigoDisponibles,
     ataquesJugadorDisponibles, 
-    enemigos,
-    contenedorAtaquesEnemigoDisponibles,
     mishimones
 ) {
     const seleccionada = mishimones.find(m => document.getElementById(m.nombre).checked);
@@ -19,48 +51,56 @@ function seleccionarMascotaJugador(
 
         ataquesJugadorDisponibles = seleccionada.ataques;
         
-        //mostrarBotonesAtaque(
-        //    ataquesEnemigoDisponibles,
-        //    ataquesJugadorDisponibles
-        //);
-
-        document.getElementById("sectionSeleccionarMascota").style.display = "none";
-        //document.getElementById("sectionSeleccionarAtaque").style.display = "flex";
-        document.getElementById("sectionVerMapa").style.display = "flex";
-
+        mostrarModalSeleccion(seleccionada);
         asignarMishimonJugador(seleccionada);
+
         seleccionada.mapaFoto = new Image();
         seleccionada.mapaFoto.src = seleccionada.foto;
+        console.log(seleccionada)
         seleccionada.mapaFoto.onload = () => {
-            // iniciarMapa();
         };
     } else {
         alert("No has seleccionado tu mascota");
     }
 }
 
+function asignarMishimonJugador(mishimon) {
+    mishimonJugadorSet.nombre = mishimon.nombre;
+    mishimonJugadorSet.mapaFoto = new Image();
+    mishimonJugadorSet.x = 0;
+    mishimonJugadorSet.y = 0;
+    mishimonJugadorSet.ancho = 100;
+    mishimonJugadorSet.alto = 100;
+
+    mishimonJugadorSet.mapaFoto.src = mishimon.foto;
+}
+
+
+
 function seleccionarMascotaEnemigo(
-    enemigos,
-    contenedorAtaquesEnemigoDisponibles,
+    contenedorAtaquesEnemigoDisponibles, 
     ataquesEnemigoDisponibles
 ) {
-    const indiceEnemigo = aleatorio(0, enemigos.length - 1);
-    const enemigo = enemigos[indiceEnemigo];
+    // 🔥 Seleccionamos un enemigo aleatorio directamente dentro de la función
+    const indiceEnemigo = Math.floor(Math.random() * enemigos.length);
+    const enemigoSeleccionado = enemigos[indiceEnemigo];
 
-    generarEnemigos(); 
+    // En lugar de reasignar, modificamos el objeto existente
+    mishimonEnemigoSet.nombre = enemigoSeleccionado.nombre;
+    mishimonEnemigoSet.mapaFoto = new Image();
+    mishimonEnemigoSet.x = Math.random() * (canvasMapa.width - 50) || 50;
+    mishimonEnemigoSet.y = Math.random() * (canvasMapa.height - 50) || 50;
+    mishimonEnemigoSet.ancho = 100;
+    mishimonEnemigoSet.alto = 100;
 
-    let contenedorMascotaEnemigo = document.getElementById("pAvatarMascotaEnemigo");
-    contenedorMascotaEnemigo.innerHTML = `
-        <img src="${enemigo.foto}" alt="${enemigo.nombre}" width="120px">
-        <p>${enemigo.nombre}</p>`;
+    mishimonEnemigoSet.mapaFoto.src = enemigoSeleccionado.foto;
 
-    document.getElementById("divAtaquesDisponiblesEnemigo").style.display = "block";
-
-    mostrarAtaquesEnemigo(
-        contenedorAtaquesEnemigoDisponibles,
-        ataquesEnemigoDisponibles
-    );
+    // 📌 Cuando la imagen esté lista, se ejecuta `pintarMishimones()`
+    mishimonEnemigoSet.mapaFoto.onload = () => {
+        pintarMishimones();
+    };
 }
+
 
 function mostrarBotonesAtaque(
     ataquesEnemigoDisponibles, 
@@ -127,5 +167,12 @@ function mostrarAtaquesEnemigo(
     });
 }
 
-// 📌 Exportar funciones para usarlas en otros archivos
-export { seleccionarMascotaJugador, mostrarBotonesAtaque, seleccionarMascotaEnemigo };
+export { 
+    ocultarSecciones, 
+    asignarMishimonJugador, 
+    mishimonJugadorSet, 
+    generarTarjetasMishimones, 
+    seleccionarMascotaJugador, 
+    mostrarBotonesAtaque, 
+    seleccionarMascotaEnemigo,
+    mishimonEnemigoSet };

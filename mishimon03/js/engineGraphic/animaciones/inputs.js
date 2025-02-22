@@ -1,6 +1,5 @@
 // inputs para movimiento de mishimon
-
-import { iniciarMovimiento, detenerMovimiento } from "./movimiento.js";
+import { iniciarMovimiento, detenerMovimiento } from "./movimiento";
 
 // 🔹 Capturar controles de teclado
 window.addEventListener("keydown", (event) => {

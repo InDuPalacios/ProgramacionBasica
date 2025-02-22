@@ -1,47 +1,44 @@
-// 📌 ui.js - Manejo de la interfaz del juego
-
-import { seleccionarMascotaJugador } from "./functions/ctrlMishimonGame.js";
-
-// Función para reiniciar el juego
-function iniciarJuego(
-    sectionSeleccionarAtaque, 
-    sectionBtnReiniciar, 
-    divAtaquesDisponiblesEnemigo, 
-    sectionVerMapa,
+// 📌 coreMishimonGame.js - Manejo de la interfaz del juego
+import { 
     btnMascota, 
-    btnReiniciar,
-    divTarjetas,
+    btnReiniciar, 
+    ataquesJugadorDisponibles, 
     mishimones,
-    ataquesEnemigoDisponibles,
-    ataquesJugadorDisponibles,
-    enemigos,
-    contenedorAtaquesEnemigoDisponibles
-) {
-    sectionSeleccionarAtaque.style.display = "none";
-    sectionBtnReiniciar.style.display = "none";
-    divAtaquesDisponiblesEnemigo.style.display = "none";
-    sectionVerMapa.style.display = "none";
+    sectionVerMapa,
+    sectionSeleccionarMascota,
+    sectionBtnReiniciar,
+    divAtaquesPosiblesJugador } from "../data/sharedData.js"
 
-    mishimones.forEach((mishimon) => {
-        let opcionDeMishimones = `
-        <input type="radio" name="mascota" id=${mishimon.nombre} />
-        <label class="tajeta-de-mishimon" for=${mishimon.nombre}>
-            <p>${mishimon.nombre}</p>
-            <img src=${mishimon.foto} alt=${mishimon.nombre}>
-        </label>`;
-        divTarjetas.innerHTML += opcionDeMishimones;
+import { 
+    ocultarSecciones,
+    generarTarjetasMishimones,
+    seleccionarMascotaJugador } from "./functions/ctrlMishimonGame.js";
+
+function iniciarJuego() {
+    ocultarSecciones();
+    generarTarjetasMishimones();
+    inicializarEventoSeleccionMascota(
+        btnMascota,
+        ataquesJugadorDisponibles,
+        mishimones);
+    inicializarEventoReiniciar(btnReiniciar);
+}
+
+function inicializarEventoSeleccionMascota(
+    btnMascota, 
+    ataquesJugadorDisponibles, 
+    mishimones) {
+    btnMascota.addEventListener("click", () => {
+        seleccionarMascotaJugador(
+            ataquesJugadorDisponibles, 
+            mishimones
+        );
     });
+}
 
-    btnMascota.addEventListener(
-        "click", () => {
-            seleccionarMascotaJugador(
-                ataquesEnemigoDisponibles,
-                ataquesJugadorDisponibles, 
-                enemigos, 
-                contenedorAtaquesEnemigoDisponibles,
-                mishimones
-            );
-        });
+
+// 📌 Función para asignar evento al botón de reiniciar
+function inicializarEventoReiniciar(btnReiniciar) {
     btnReiniciar.addEventListener("click", reiniciarJuego);
 }
 
@@ -53,12 +50,12 @@ function reiniciarJuego() {
     rondasJugadas = 0;
 
     // ✅ Volver a la pantalla de selección sin recargar la página
-    document.getElementById("sectionSeleccionarMascota").style.display = "flex";
-    document.getElementById("sectionVerMapa").style.display = "none";
-    document.getElementById("sectionBtnReiniciar").style.display = "none";
+    sectionSeleccionarMascota.style.display = "flex";
+    sectionVerMapa.style.display = "none";
+    sectionBtnReiniciar.style.display = "none";
 
     // ✅ Limpiar ataques anteriores
-    document.getElementById("divAtaquesPosiblesJugador").innerHTML = "";
+    divAtaquesPosiblesJugador.innerHTML = "";
     document.getElementById("ataques-enemigo").innerHTML = "";
     document.getElementById("pResultado").innerHTML = "";
 
@@ -67,4 +64,5 @@ function reiniciarJuego() {
 }
 
 // 📌 Exportar funciones para usarlas en otros archivos
-export { iniciarJuego, reiniciarJuego };
+export { iniciarJuego, inicializarEventoSeleccionMascota, inicializarEventoReiniciar };
+
