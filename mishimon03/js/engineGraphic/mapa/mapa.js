@@ -13,24 +13,21 @@ import { ajustarCanvas } from "../../ui/functions/responsive.js";
 let lienzo, canvasMapa, fondoMapa;
 let mishimonesEnemigos = [];
 
-function iniciarMapa() {
-    canvasMapa = document.getElementById("canvasMapa");
+function canvasMapaSet() {
+    const canvasMapa = document.getElementById("canvasMapa");
+
     lienzo = canvasMapa.getContext("2d");
-    ajustarCanvas()
     fondoMapa = new Image();
     fondoMapa.src = "./assets/escene.png";
 
     fondoMapa.onload = () => {
-        seleccionarMascotaEnemigo()
-        // ---------------> 📌 pintarMishimones(); <--------------------
-        // Inicialmente me gustaria llamar a pintarMishimones aqui
-        // pero no seleccionaba el enemigo antes de ponerse a pintar
-
-
-        // requestAnimationFrame(actualizarCanvas);
+        console.log("Mapa cargado correctamente.");
+        lienzo.drawImage(fondoMapa, 0, 0, canvasMapa.width, canvasMapa.height); 
     };
- 
+
+    ajustarCanvas()
 }
+
 
 function actualizarCanvas() {
     if (mishimonJugadorSet && mishimonesEnemigos.length > 0) {
@@ -76,4 +73,4 @@ function pintarMishimones() {
 }
 
 
-export { iniciarMapa, pintarMishimones, mishimonesEnemigos };
+export { pintarMishimones, mishimonesEnemigos, canvasMapaSet };

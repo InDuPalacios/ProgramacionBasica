@@ -15,7 +15,11 @@ import { pintarMishimones } from "../../engineGraphic/mapa/mapa.js"
 import { iniciarMovimiento } from "../../engineGraphic/animaciones/movimiento.js"
 
 import { aleatorio } from "../../class/mechanics/iaEnemy.js"
-import { mostrarModalSeleccion, cerrarModal, confirmarSeleccion } from "../functions/confirmSelection.js";
+
+import { 
+    mostrarModalSeleccion, 
+    cerrarModal, 
+    confirmarSeleccion } from "../functions/confirmSelection.js";
 
 
 function ocultarSecciones() {
@@ -44,21 +48,18 @@ function seleccionarMascotaJugador(
     const seleccionada = mishimones.find(m => document.getElementById(m.nombre).checked);
 
     if (seleccionada) {
-        let contenedorMascotaJugador = document.getElementById("pAvatarMascotaJugador");
-        contenedorMascotaJugador.innerHTML = `
-            <img src="${seleccionada.foto}" alt="${seleccionada.nombre}" width="120px">
-            <p>${seleccionada.nombre}</p>`;
-
-        ataquesJugadorDisponibles = seleccionada.ataques;
-        
-        mostrarModalSeleccion(seleccionada);
-        asignarMishimonJugador(seleccionada);
-
+        // let contenedorMascotaJugador = document.getElementById("pAvatarMascotaJugador");
+        // contenedorMascotaJugador.innerHTML = `
+        //     <img src="${seleccionada.foto}" alt="${seleccionada.nombre}" width="120px">
+        //     <p>${seleccionada.nombre}</p>`;
         seleccionada.mapaFoto = new Image();
         seleccionada.mapaFoto.src = seleccionada.foto;
         console.log(seleccionada)
-        seleccionada.mapaFoto.onload = () => {
-        };
+
+        asignarMishimonJugador(seleccionada);
+        
+        mostrarModalSeleccion(seleccionada);
+
     } else {
         alert("No has seleccionado tu mascota");
     }
@@ -66,16 +67,12 @@ function seleccionarMascotaJugador(
 
 function asignarMishimonJugador(mishimon) {
     mishimonJugadorSet.nombre = mishimon.nombre;
-    mishimonJugadorSet.mapaFoto = new Image();
+    mishimonJugadorSet.mapaFoto = mishimon.mapaFoto;
     mishimonJugadorSet.x = 0;
     mishimonJugadorSet.y = 0;
     mishimonJugadorSet.ancho = 100;
     mishimonJugadorSet.alto = 100;
-
-    mishimonJugadorSet.mapaFoto.src = mishimon.foto;
 }
-
-
 
 function seleccionarMascotaEnemigo(
     contenedorAtaquesEnemigoDisponibles, 
@@ -85,22 +82,22 @@ function seleccionarMascotaEnemigo(
     const indiceEnemigo = Math.floor(Math.random() * enemigos.length);
     const enemigoSeleccionado = enemigos[indiceEnemigo];
 
-    // En lugar de reasignar, modificamos el objeto existente
     mishimonEnemigoSet.nombre = enemigoSeleccionado.nombre;
     mishimonEnemigoSet.mapaFoto = new Image();
+    mishimonEnemigoSet.mapaFoto.src = enemigoSeleccionado.foto;
     mishimonEnemigoSet.x = Math.random() * (canvasMapa.width - 50) || 50;
     mishimonEnemigoSet.y = Math.random() * (canvasMapa.height - 50) || 50;
     mishimonEnemigoSet.ancho = 100;
     mishimonEnemigoSet.alto = 100;
 
-    mishimonEnemigoSet.mapaFoto.src = enemigoSeleccionado.foto;
+    mishimonEnemigoSet.vida = enemigoSeleccionado.vida;
+    mishimonEnemigoSet.ataques = [...enemigoSeleccionado.ataques];
 
     // 📌 Cuando la imagen esté lista, se ejecuta `pintarMishimones()`
     mishimonEnemigoSet.mapaFoto.onload = () => {
         pintarMishimones();
     };
 }
-
 
 function mostrarBotonesAtaque(
     ataquesEnemigoDisponibles, 
@@ -175,4 +172,5 @@ export {
     seleccionarMascotaJugador, 
     mostrarBotonesAtaque, 
     seleccionarMascotaEnemigo,
-    mishimonEnemigoSet };
+    mishimonEnemigoSet 
+};

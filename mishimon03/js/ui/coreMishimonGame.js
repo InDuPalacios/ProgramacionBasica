@@ -36,7 +36,6 @@ function inicializarEventoSeleccionMascota(
     });
 }
 
-
 // 📌 Función para asignar evento al botón de reiniciar
 function inicializarEventoReiniciar(btnReiniciar) {
     btnReiniciar.addEventListener("click", reiniciarJuego);
