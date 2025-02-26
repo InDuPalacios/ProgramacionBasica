@@ -8,6 +8,17 @@ export let vidasJugador = 3, vidasEnemigo = 3;
 export let ataquesJugadorDisponibles = [], ataquesEnemigoDisponibles = [];
 export let rondasJugadas = 0;
 
+export const canvasData = {
+    lienzo: null,
+    fondoMapa: null,
+    mapaCargado: false,
+    velocidad: 2,
+    direccion: { x: 0, y: 0 },
+    movimientoActivo: false,
+};
+
+
+
 // 📌 Creación de los Mishimones del jugador
 export let mishimonJugador = [
     new Mishimon('Waltermon', './assets/mishimon__waltermon.svg', 5),
@@ -52,3 +63,5 @@ export const contenedorAtaquesEnemigo = document.getElementById("divAtaquesPosib
 export const contenedorAtaquesEnemigoDisponibles = document.getElementById("divAtaquesDisponiblesEnemigo");
 export const modal = document.getElementById("sectionConfirmSelection");
 export const infoMascota = document.getElementById("infoMascotaSeleccionada");
+export const canvasMapa = document.getElementById("canvasMapa");
+

@@ -10,8 +10,6 @@ import {
     mishimonJugadorSet,
     mishimonEnemigoSet } from "../../data/sharedData.js"
 
-import { pintarMishimones } from "../../engineGraphic/mapa/mapa.js"
-
 import { iniciarMovimiento } from "../../engineGraphic/animaciones/movimiento.js"
 
 import { aleatorio } from "../../class/mechanics/iaEnemy.js"
@@ -92,12 +90,11 @@ function seleccionarMascotaEnemigo(
 
     mishimonEnemigoSet.vida = enemigoSeleccionado.vida;
     mishimonEnemigoSet.ataques = [...enemigoSeleccionado.ataques];
-
-    // 📌 Cuando la imagen esté lista, se ejecuta `pintarMishimones()`
-    mishimonEnemigoSet.mapaFoto.onload = () => {
-        pintarMishimones();
-    };
 }
+
+
+
+
 
 function mostrarBotonesAtaque(
     ataquesEnemigoDisponibles, 

@@ -1,32 +1,37 @@
+// 📌  mapa.js - 
+
 import { 
     detectarColision, 
     mostrarVentanaEmergente, 
     cerrarVentanaEmergente } from "../../batalla.js";
 
-import { 
-    mishimonJugadorSet, 
-    mishimonEnemigoSet,
-    seleccionarMascotaEnemigo } from "../../ui/functions/ctrlMishimonGame.js";
+import { mishimonJugadorSet } from "../../ui/functions/ctrlMishimonGame.js";
     
 import { ajustarCanvas } from "../../ui/functions/responsive.js";
 
-let lienzo, canvasMapa, fondoMapa;
-let mishimonesEnemigos = [];
+import { canvasMapa, canvasData } from "../../data/sharedData.js";
 
 function canvasMapaSet() {
-    const canvasMapa = document.getElementById("canvasMapa");
-
-    lienzo = canvasMapa.getContext("2d");
-    fondoMapa = new Image();
-    fondoMapa.src = "./assets/escene.png";
-
-    fondoMapa.onload = () => {
-        console.log("Mapa cargado correctamente.");
-        lienzo.drawImage(fondoMapa, 0, 0, canvasMapa.width, canvasMapa.height); 
-    };
-
+    inicializarCanvas(canvasMapa);
+    cargarFondoMapa(canvasMapa); 
     ajustarCanvas()
 }
+
+function inicializarCanvas(canvasMapa) {
+    canvasData.lienzo = canvasMapa.getContext("2d"); 
+}
+
+function cargarFondoMapa(canvasMapa) {
+    canvasData.fondoMapa = new Image();
+    canvasData.fondoMapa.src = "./assets/escene.png";
+
+    canvasData.fondoMapa.onload = () => {
+        console.log("Mapa cargado correctamente.");
+        canvasData.mapaCargado = true;
+        canvasData.lienzo.drawImage(canvasData.fondoMapa, 0, 0, canvasMapa.width, canvasMapa.height);
+    };
+}
+
 
 
 function actualizarCanvas() {
@@ -39,38 +44,6 @@ function actualizarCanvas() {
     requestAnimationFrame(actualizarCanvas);
 }
 
-function pintarMishimones() {
-    lienzo.clearRect(0, 0, canvasMapa.width, canvasMapa.height);
-    lienzo.drawImage(fondoMapa, 0, 0, canvasMapa.width, canvasMapa.height);
-
-    console.log("🔍 Estado actual de mishimonEnemigo:", mishimonEnemigoSet);
-
-    if (mishimonJugadorSet && mishimonJugadorSet.mapaFoto.complete) {
-        lienzo.drawImage(
-            mishimonJugadorSet.mapaFoto,
-            mishimonJugadorSet.x,
-            mishimonJugadorSet.y,
-            mishimonJugadorSet.ancho,
-            mishimonJugadorSet.alto
-        );
-         } else {
-        console.warn("⚠ Jugador no tiene imagen lista");
-    }
-        
-        // ✅ Verificar que `mishimonEnemigo` existe antes de pintarlo
-    if (mishimonEnemigoSet && mishimonEnemigoSet.mapaFoto.complete) {
-        lienzo.drawImage(
-            mishimonEnemigoSet.mapaFoto,
-            mishimonEnemigoSet.x,
-            mishimonEnemigoSet.y,
-            mishimonEnemigoSet.ancho,
-            mishimonEnemigoSet.alto
-        );
-        } 
-     else {
-        console.warn("⚠ ⚠ No hay enemigo seleccionado o su imagen no ha cargado");
-    }
-}
 
 
-export { pintarMishimones, mishimonesEnemigos, canvasMapaSet };
+export { canvasMapaSet };

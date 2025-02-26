@@ -1,46 +1,57 @@
-import { mishimonJugadorSet } from "../../ui/functions/ctrlMishimonGame.js"; 
+// movimineto.js - inputs para movimiento de mishimon
 
-let intervaloMovimiento;
+import { 
+    canvasData, 
+    canvasMapa } from "../../data/sharedData.js";
+
+import { mishimonJugadorSet } from "../../ui/functions/ctrlMishimonGame.js";
+import { pintarMishimones } from "../../ui/functions/pintarPersonajes.js";
+
+// 🔹 Función para mover el Mishimon en el `canvas`
+function moverMishimon() {
+    if (!mishimonJugadorSet || !canvasData.movimientoActivo) return;
+
+    // ✅ Mueve el Mishimon en la dirección actual
+    mishimonJugadorSet.x += canvasData.direccion.x * canvasData.velocidad;
+    mishimonJugadorSet.y += canvasData.direccion.y * canvasData.velocidad;
+
+    // ✅ Limpiar y volver a pintar el canvas
+    canvasData.lienzo.clearRect(0, 0, canvasMapa.width, canvasMapa.height);
+    pintarMishimones();
+
+    // ✅ Llamamos de nuevo para mantener el movimiento activo
+    requestAnimationFrame(moverMishimon);
+}
 
 // 🔹 Función para iniciar el movimiento continuo
-function iniciarMovimiento(direccion) {
-    detenerMovimiento(); 
+function iniciarMovimiento(direccionMovimiento) {
+    switch (direccionMovimiento) {
+        case "up":
+            canvasData.direccion.y = -1;
+            break;
+        case "down":
+            canvasData.direccion.y = 1;
+            break;
+        case "left":
+            canvasData.direccion.x = -1;
+            break;
+        case "right":
+            canvasData.direccion.x = 1;
+            break;
+    }
 
-    intervaloMovimiento = setInterval(() => {
-        moverMishimon(direccion);
-    }, 50);
+    if (!canvasData.movimientoActivo) {
+        canvasData.movimientoActivo = true;
+        requestAnimationFrame(moverMishimon);
+    }
 }
 
 // 🔹 Función para detener el movimiento
 function detenerMovimiento() {
-    clearInterval(intervaloMovimiento);
+    canvasData.direccion.x = 0;
+    canvasData.direccion.y = 0;
+    canvasData.movimientoActivo = false;
 }
 
-// 🔹 Función para mover el Mishimon en el `canvas`
-function moverMishimon(direccion) {
-    if (!mishimonJugador || typeof mishimonJugador.x === "undefined" || typeof mishimonJugador.y === "undefined") {
-        console.error("❌ Error: mishimonJugador no está definido correctamente.");
-        return;
-    }
 
-    const velocidad = 5;
-    switch (direccion) {
-        case "up":
-            mishimonJugador.y -= velocidad;
-            break;
-        case "down":
-            mishimonJugador.y += velocidad;
-            break;
-        case "left":
-            mishimonJugador.x -= velocidad;
-            break;
-        case "right":
-            mishimonJugador.x += velocidad;
-            break;
-    }
-}
-
-window.iniciarMovimiento = iniciarMovimiento;
-window.detenerMovimiento = detenerMovimiento;
-
-export { iniciarMovimiento, detenerMovimiento, moverMishimon };
+export { iniciarMovimiento, detenerMovimiento };
