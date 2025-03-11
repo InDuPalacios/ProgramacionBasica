@@ -1,9 +1,9 @@
 // 📌  mapa.js - 
 
-import { 
+/* import { 
     detectarColision, 
     mostrarVentanaEmergente, 
-    cerrarVentanaEmergente } from "../../batalla.js";
+    cerrarVentanaEmergente } from "../../batalla.js"; */
 
 import { mishimonJugadorSet } from "../../ui/functions/ctrlMishimonGame.js";
     
@@ -34,15 +34,15 @@ function cargarFondoMapa(canvasMapa) {
 
 
 
-function actualizarCanvas() {
-    if (mishimonJugadorSet && mishimonesEnemigos.length > 0) {
-        pintarMishimones();
-        for (let enemigo of mishimonesEnemigos) {
-            detectarColision(mishimonJugadorSet, enemigo);
-        }
-    }
-    requestAnimationFrame(actualizarCanvas);
-}
+// function actualizarCanvas() {
+//     if (mishimonJugadorSet && mishimonesEnemigos.length > 0) {
+//         pintarMishimones();
+//         for (let enemigo of mishimonesEnemigos) {
+//             detectarColision(mishimonJugadorSet, enemigo);
+//         }
+//     }
+//     requestAnimationFrame(actualizarCanvas);
+// }
 
 
 

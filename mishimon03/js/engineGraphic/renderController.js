@@ -1,25 +1,29 @@
 // 📌  renderController.js - 
 
 import { canvasMapaSet, } from "../engineGraphic/mapa/mapa.js";
-import { seleccionarMascotaEnemigo } from "../ui/functions/ctrlMishimonGame.js";
 import { pintarMishimones } from "../ui/functions/pintarPersonajes.js";
 import { canvasData } from "../data/sharedData.js";
-import { configurarTeclado, configurarBotones } from "../ui/functions/inputs.js";
+import { detectarColision } from "../ui/functions/collisions.js";
 
-function iniciarMapa() {
-    canvasMapaSet();
-    seleccionarMascotaEnemigo();
-    console.log("📌 Iniciando mapa...");
-
-    // ⏳ Esperar hasta que el mapa esté cargado antes de pintar
+function esperarCargaMapa(callback) {
     const esperarMapaCargado = setInterval(() => {
         if (canvasData.mapaCargado) {
             clearInterval(esperarMapaCargado);
-            pintarMishimones();
-            configurarTeclado();
-            configurarBotones();
+            callback();
         }
     }, 100);
 }
 
-export {iniciarMapa};
+function actualizarJuego() {
+    pintarMishimones();
+    detectarColision();
+    requestAnimationFrame(actualizarJuego);
+}
+
+function iniciarMapa() {
+    canvasMapaSet();
+    esperarCargaMapa(actualizarJuego);
+}
+
+export { iniciarMapa };
+

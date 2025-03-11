@@ -3,10 +3,16 @@ import { Mishimon, asignarAtaques } from '../class/characters/datamishimon.js';
 // -------- Declarar variables globales -----------------------------------------------
 export let mishimonJugadorSet = {};  
 export let mishimonEnemigoSet = {};
-export let ataqueJugador, ataqueEnemigo;
-export let vidasJugador = 3, vidasEnemigo = 3;
-export let ataquesJugadorDisponibles = [], ataquesEnemigoDisponibles = [];
+export let ataquesJugador = [];
+export let ataquesJugadorDisponibles = [] 
+export let ataquesEnemigoDisponibles = [];
+export let ataqueSeleccionadoJugador = "";
+export let ataqueEnemigo = "";
 export let rondasJugadas = 0;
+
+export const estadoBatalla = {
+    ataqueSeleccionadoEnemigo: "",
+};
 
 export const canvasData = {
     lienzo: null,
@@ -54,6 +60,7 @@ export const sectionConfirmSelection = document.getElementById("sectionConfirmSe
 export const divTarjetas = document.getElementById('divTarjetas');
 export const divAtaquesDisponiblesEnemigo = document.getElementById("divAtaquesDisponiblesEnemigo");
 export const divAtaquesPosiblesJugador = document.getElementById("divAtaquesPosiblesJugador")
+export let divAreaTarjetasAtaques = document.getElementById("divAreaTarjetasAtaques");
 export const btnMascota = document.getElementById("btnMascota");
 export const btnProbarOtro = document.getElementById("btnProbarOtro")
 export const btnConfirmarSeleccion = document.getElementById("btnConfirmarSeleccion")
@@ -64,4 +71,6 @@ export const contenedorAtaquesEnemigoDisponibles = document.getElementById("divA
 export const modal = document.getElementById("sectionConfirmSelection");
 export const infoMascota = document.getElementById("infoMascotaSeleccionada");
 export const canvasMapa = document.getElementById("canvasMapa");
+export const modalOverlay = document.getElementById("modalOverlay");
+
 

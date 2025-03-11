@@ -8,9 +8,14 @@ import {
     mishimones,
     enemigos,
     mishimonJugadorSet,
-    mishimonEnemigoSet } from "../../data/sharedData.js"
+    mishimonEnemigoSet,
+    ataquesEnemigoDisponibles,
+    estadoBatalla,
+    btnConfirmarSeleccion,
+    ataqueEnemigo } from "../../data/sharedData.js"
 
-import { iniciarMovimiento } from "../../engineGraphic/animaciones/movimiento.js"
+import { mostrarBotonesAtaque,
+    actualizarInterfazAtaquesEnemigo } from "../../batalla.js";
 
 import { aleatorio } from "../../class/mechanics/iaEnemy.js"
 
@@ -39,6 +44,7 @@ function generarTarjetasMishimones() {
     `).join('');
 }
 
+// Seteo del Jugador 
 function seleccionarMascotaJugador(
     ataquesJugadorDisponibles, 
     mishimones
@@ -46,16 +52,14 @@ function seleccionarMascotaJugador(
     const seleccionada = mishimones.find(m => document.getElementById(m.nombre).checked);
 
     if (seleccionada) {
-        // let contenedorMascotaJugador = document.getElementById("pAvatarMascotaJugador");
-        // contenedorMascotaJugador.innerHTML = `
-        //     <img src="${seleccionada.foto}" alt="${seleccionada.nombre}" width="120px">
-        //     <p>${seleccionada.nombre}</p>`;
+        let contenedorMascotaJugador = document.getElementById("pAvatarMascotaJugador");
+        contenedorMascotaJugador.innerHTML = `
+            <img src="${seleccionada.foto}" alt="${seleccionada.nombre}" width="120px">
+            <p>${seleccionada.nombre}</p>`;
         seleccionada.mapaFoto = new Image();
         seleccionada.mapaFoto.src = seleccionada.foto;
-        console.log(seleccionada)
 
         asignarMishimonJugador(seleccionada);
-        
         mostrarModalSeleccion(seleccionada);
 
     } else {
@@ -70,104 +74,132 @@ function asignarMishimonJugador(mishimon) {
     mishimonJugadorSet.y = 0;
     mishimonJugadorSet.ancho = 100;
     mishimonJugadorSet.alto = 100;
+    mishimonJugadorSet.ataques = [...mishimon.ataques]
+
+    console.log("✅ MishimonJugadorSet asignado correctamente:", mishimonJugadorSet);
 }
 
-function seleccionarMascotaEnemigo(
-    contenedorAtaquesEnemigoDisponibles, 
-    ataquesEnemigoDisponibles
-) {
-    // 🔥 Seleccionamos un enemigo aleatorio directamente dentro de la función
+// Seteo del Enemigo
+function obtenerPosicionEnemigo() {
+    const margen = 50; 
+    const distanciaMinima = 200; 
+    let x, y;
+    let intentos = 0;
+    const maxIntentos = 50;
+
+    do {
+        x = Math.random() * (canvasMapa.width - margen * 2) + margen;
+        y = Math.random() * (canvasMapa.height - margen * 2) + margen;
+        intentos++;
+    } while (
+        Math.hypot(x - mishimonJugadorSet.x, y - mishimonJugadorSet.y) < distanciaMinima &&
+        intentos < maxIntentos
+    );
+
+    // Si no encuentra una posición válida, coloca al enemigo en el centro
+    if (intentos >= maxIntentos) {
+        console.warn("⚠ No se encontró una posición óptima, asignando posición por defecto.");
+        x = canvasMapa.width / 2;
+        y = canvasMapa.height / 2;
+    }
+
+    return { x, y };
+}
+
+function seleccionarMascotaEnemigo() {
     const indiceEnemigo = Math.floor(Math.random() * enemigos.length);
     const enemigoSeleccionado = enemigos[indiceEnemigo];
 
     mishimonEnemigoSet.nombre = enemigoSeleccionado.nombre;
     mishimonEnemigoSet.mapaFoto = new Image();
     mishimonEnemigoSet.mapaFoto.src = enemigoSeleccionado.foto;
-    mishimonEnemigoSet.x = Math.random() * (canvasMapa.width - 50) || 50;
-    mishimonEnemigoSet.y = Math.random() * (canvasMapa.height - 50) || 50;
     mishimonEnemigoSet.ancho = 100;
     mishimonEnemigoSet.alto = 100;
-
     mishimonEnemigoSet.vida = enemigoSeleccionado.vida;
     mishimonEnemigoSet.ataques = [...enemigoSeleccionado.ataques];
-}
+    ataquesEnemigoDisponibles.splice(0, ataquesEnemigoDisponibles.length, ...mishimonEnemigoSet.ataques);
 
 
+    // Obtener posición válida
+    const posicion = obtenerPosicionEnemigo();
+    mishimonEnemigoSet.x = posicion.x;
+    mishimonEnemigoSet.y = posicion.y;
+
+    // Renderizar la imagen y el nombre del enemigo directamente en el HTML
+    let contenedorMascotaEnemigo = document.getElementById("pAvatarMascotaEnemigo");
+
+    if (!contenedorMascotaEnemigo) {
+        console.error("⚠ Error: No se encontró el contenedor del enemigo.");
+        return;
+    }
+
+    contenedorMascotaEnemigo.innerHTML = `
+        <img src="${mishimonEnemigoSet.mapaFoto.src}" alt="${mishimonEnemigoSet.nombre}" width="120px">
+        <p>${mishimonEnemigoSet.nombre}</p>`;
 
 
+        let contenedorAtaquesEnemigo = document.getElementById("divAtaquesDisponiblesEnemigo");
 
-function mostrarBotonesAtaque(
-    ataquesEnemigoDisponibles, 
-    ataquesJugadorDisponibles
-) {
-    const contenedorAtaques = document.querySelector(".class-div-tarjetas-ataques");
-    contenedorAtaques.innerHTML = "";
-
-    ataquesJugadorDisponibles.forEach(ataque => {
-        const boton = document.createElement("button");
-        boton.id = ataque.id;
-        boton.classList.add("boton-de-ataque");
-        boton.innerText = ataque.nombre;
-
-        // Efecto hover con JavaScript
-        boton.addEventListener("mouseenter", () => {
-            if (!boton.disabled) {
-                boton.style.backgroundColor = "#BB9CC0";
-                boton.style.boxShadow = "0px 4px 10px rgba(0, 0, 0, 0.2)";
-            }
-        });
-
-        boton.addEventListener("mouseleave", () => {
-            if (!boton.disabled) {
-                boton.style.backgroundColor = ""; // Volver al color original
-                boton.style.color = ""; // Volver al color original del texto
-                boton.style.border = "";
-                boton.style.transform = "";
-                boton.style.boxShadow = "";
-            }
-        });
-
-        boton.addEventListener("click", () => {
-            ataqueJugador = ataque.nombre.split(" ")[1];
-            ataqueAleatorioEnemigo(ataquesEnemigoDisponibles);
-            
-            // Marcar el botón como seleccionado y deshabilitarlo
-            boton.disabled = true;
-            boton.style.backgroundColor = "#BB9CC0";
-        });
-
-        contenedorAtaques.appendChild(boton);
-    });
-}
-
-function mostrarAtaquesEnemigo(
-    contenedorAtaquesEnemigoDisponibles,
-    ataquesEnemigoDisponibles
-) {
-    // Limpiamos solo los botones, sin afectar el subtítulo
-    contenedorAtaquesEnemigoDisponibles.querySelectorAll("button").forEach(boton => boton.remove());
-
-    // Agregamos los botones de los ataques
-    ataquesEnemigoDisponibles.forEach(ataque => {
-        let ataqueElemento = document.createElement("button"); 
-        ataqueElemento.innerText = ataque.nombre;
-        ataqueElemento.classList.add("boton-de-ataque");
-
-        if (ataque.usado) {
-            ataqueElemento.style.backgroundColor = "#BB9CC0"; // Indicar que fue usado
+        if (!contenedorAtaquesEnemigo) {
+            console.error("⚠ Error: No se encontró el contenedor de ataques del enemigo.");
+            return;
         }
 
-        contenedorAtaquesEnemigoDisponibles.appendChild(ataqueElemento);
-    });
+        contenedorAtaquesEnemigo.style.display = "block";
+    
+        // Limpiar antes de agregar nuevos botones
+        contenedorAtaquesEnemigo.innerHTML = `<h2 class="subtitulo">Ataques del Enemigo:</h2>`;
+    
+        ataquesEnemigoDisponibles.forEach(ataque => {
+            let ataqueElemento = document.createElement("button");
+            ataqueElemento.innerText = ataque.nombre;
+            ataqueElemento.classList.add("boton-de-ataque");
+    
+            contenedorAtaquesEnemigo.appendChild(ataqueElemento);
+        });
+
+        console.log("👾 Enemigo seleccionado:", enemigoSeleccionado);
 }
+
+function ataqueAleatorioEnemigo() {
+    console.log("📌 Antes de seleccionar ataque enemigo:", ataquesEnemigoDisponibles.map(a => a.nombre));
+
+    if (!ataquesEnemigoDisponibles || ataquesEnemigoDisponibles.length === 0) {
+        estadoBatalla.ataqueSeleccionadoEnemigo = "Sin ataque"; // ✅ AHORA SÍ SE PUEDE MODIFICAR
+        return estadoBatalla.ataqueSeleccionadoEnemigo;
+    }
+
+    // 🔥 Generar índice aleatorio
+    let ataqueIndex = Math.floor(Math.random() * ataquesEnemigoDisponibles.length);
+    console.log(`🎯 Índice seleccionado: ${ataqueIndex}, Total ataques disponibles: ${ataquesEnemigoDisponibles.length}`);
+
+
+    // 🚀 Seleccionar ataque
+    let ataqueSeleccionado = ataquesEnemigoDisponibles.splice(ataqueIndex, 1)[0];
+    console.log("🔍 Ataque seleccionado:", ataqueSeleccionado);
+
+    if (!ataqueSeleccionado || !ataqueSeleccionado.nombre) {
+        console.error("⚠ Error: No se pudo seleccionar un ataque enemigo.");
+        estadoBatalla.ataqueSeleccionadoEnemigo = "Sin ataque";
+        return estadoBatalla.ataqueSeleccionadoEnemigo;
+    }
+
+    estadoBatalla.ataqueSeleccionadoEnemigo = ataqueSeleccionado.nombre;
+
+    // 📌 Logs para depuración
+    console.log(`👾 El enemigo usó: ${estadoBatalla.ataqueSeleccionadoEnemigo}`);
+    return estadoBatalla.ataqueSeleccionadoEnemigo;
+}
+
+
 
 export { 
     ocultarSecciones, 
     asignarMishimonJugador, 
-    mishimonJugadorSet, 
+    mishimonJugadorSet,
     generarTarjetasMishimones, 
     seleccionarMascotaJugador, 
-    mostrarBotonesAtaque, 
     seleccionarMascotaEnemigo,
-    mishimonEnemigoSet 
+    mishimonEnemigoSet,
+    ataqueAleatorioEnemigo
 };

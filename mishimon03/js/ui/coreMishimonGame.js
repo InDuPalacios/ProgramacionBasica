@@ -12,15 +12,26 @@ import {
 import { 
     ocultarSecciones,
     generarTarjetasMishimones,
-    seleccionarMascotaJugador } from "./functions/ctrlMishimonGame.js";
+    seleccionarMascotaJugador, 
+    seleccionarMascotaEnemigo  } from "./functions/ctrlMishimonGame.js";
+
+import { 
+    configurarBotones, 
+    configurarTeclado } from "./functions/inputs.js";
 
 function iniciarJuego() {
     ocultarSecciones();
+    configurarTeclado();
+    configurarBotones();
+
+    seleccionarMascotaEnemigo();
+
     generarTarjetasMishimones();
     inicializarEventoSeleccionMascota(
         btnMascota,
         ataquesJugadorDisponibles,
         mishimones);
+
     inicializarEventoReiniciar(btnReiniciar);
 }
 
@@ -44,8 +55,8 @@ function inicializarEventoReiniciar(btnReiniciar) {
 // Función para reiniciar el juego
 function reiniciarJuego() {
     // ✅ Restablecer variables del juego
-    vidasJugador = 3;
-    vidasEnemigo = 3;
+    vidasJugador = 5;
+    vidasEnemigo = 5;
     rondasJugadas = 0;
 
     // ✅ Volver a la pantalla de selección sin recargar la página

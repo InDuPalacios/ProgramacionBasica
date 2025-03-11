@@ -44,8 +44,6 @@ function configurarTeclado() {
 
 // 📌 Función para configurar los controles físicos (botones HTML)
 function configurarBotones() {
-    console.log("✅ Ejecutando configurarBotones()...");
-
     const botones = {
         up: document.querySelector(".class-btn-flecha.class-type-arriba"),
         down: document.querySelector(".class-btn-flecha.class-type-abajo"),
@@ -53,24 +51,17 @@ function configurarBotones() {
         right: document.querySelector(".class-btn-flecha.class-type-derecha"),
     };
 
-    console.log("📌 Botones detectados en el DOM:", botones);
-
     Object.entries(botones).forEach(([direccion, boton]) => {
         if (!boton) {
             console.error(`❌ Error: No se encontró el botón ${direccion}. Verifica tu HTML.`);
             return;
         }
-
-        console.log(`✅ Botón ${direccion} detectado correctamente.`);
-
         // ⏳ Agregar eventos de presionar y soltar (touch y mouse)
         boton.addEventListener("mousedown", () => {
-            console.log(`👆 Presionando botón ${direccion}`);
             iniciarMovimiento(direccion);
         });
 
         boton.addEventListener("mouseup", () => {
-            console.log(`👆 Soltando botón ${direccion}`);
             detenerMovimiento();
         });
 
@@ -79,7 +70,7 @@ function configurarBotones() {
         });
 
         boton.addEventListener("touchstart", (e) => {
-            e.preventDefault(); // Evita el zoom en móviles
+            e.preventDefault();
             iniciarMovimiento(direccion);
         });
 
@@ -88,7 +79,6 @@ function configurarBotones() {
         });
     });
 }
-
 
 // 📌 Exportamos las funciones para usarlas en otros archivos si es necesario
 export { configurarTeclado, configurarBotones };

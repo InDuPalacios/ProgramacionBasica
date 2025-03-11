@@ -4,9 +4,13 @@ import { btnProbarOtro,
     sectionVerMapa,
     sectionConfirmSelection,
     modal,
-    infoMascota,} from "../../data/sharedData.js"
+    infoMascota,
+    ataquesJugador,
+    mishimonJugadorSet } from "../../data/sharedData.js"
 
 import { iniciarMapa } from "../../engineGraphic/renderController.js";
+
+import { mostrarBotonesAtaque } from "../../batalla.js";
 
 // 📌  Funciones para manejar el modal
 function mostrarModalSeleccion(mascota) {
@@ -28,15 +32,19 @@ function asignarEventos() {
     }
 
     if (btnConfirmarSeleccion) {
-        btnConfirmarSeleccion.addEventListener("click", confirmarSeleccion);
+        btnConfirmarSeleccion.addEventListener("click", () => {
+            confirmarSeleccion([...mishimonJugadorSet.ataques]);
+        });
     }
 }
 
-function confirmarSeleccion() {
+
+function confirmarSeleccion(ataques) {
     cerrarModal();
     sectionSeleccionarMascota.style.display = "none";
     sectionVerMapa.style.display = "flex";
     iniciarMapa();
+    mostrarBotonesAtaque(ataques);
 }
 
 function probarOtraMascota() {

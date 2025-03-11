@@ -12,6 +12,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@300;400&display=swap" rel="stylesheet">
     </head>
     <body>
+        <div id="modalOverlay"></div>
         <section id="sectionSeleccionarMascota">
             <h1 class="titulo">Mishimon</h1>
             <h2 class="subtitulo">Elige a tu mascota</h2>
@@ -52,12 +53,12 @@
             </div>
         </section>
         <section id="sectionSeleccionarAtaque">
-            <h1 class="titulo">Mishimon</h1>
+            <h1 class="titulo">¡ EMPIEZA LA BATALLA !</h1>
             <h2  class="subtitulo">Estos son tus ataques:</h2>
             <div id="divAreaTarjetasAtaques" class="class-div-tarjetas-ataques">
             </div>
             <div id="divMensajes">
-                <p id="pResultado">Elige un ataque, buena suerte! 🍀</p>
+                <p id="pResultado">Elige un ataque</p>
                 <section id="sectionBtnReiniciar">
                     <button id="btnReiniciar">Reiniciar</button>
                 </section>
@@ -65,23 +66,20 @@
             <div id="divAreaAtaques">
                 <div class="class-div-ataques-jugador">
                     <p id="pAvatarMascotaJugador"></p>
-                    <p id="pContadorVidasJugador">3</p>
+                    <p id="pContadorVidasJugador">5</p>
                     <div id="divAtaquesPosiblesJugador"></div>
                 </div>
                 <div class="class-div-ataques-enemigo">
                     <p id="pAvatarMascotaEnemigo"></p>
-                    <p id="pContadorVidasEnemigo">3</p>
+                    <p id="pContadorVidasEnemigo">5</p>
                     <div id="divAtaquesPosiblesEnemigo"></div>
                 </div>
             </div>
             <div id="divAtaquesDisponiblesEnemigo">
                 <h2 class="subtitulo">Ataques del Enemigo:</h2>
             </div>
+            <button id="btnCerrarBatalla">❌</button>
         </section>
-        <div id="divVentanaEmergente" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 0, 0, 0.8); color: white; padding: 20px; border-radius: 10px; z-index: 10;">
-            <p>¡Has tocado al enemigo!</p>
-            <button onclick="cerrarVentanaEmergente()">Cerrar</button>
-        </div>
         <script type="module" src="./js/main.js"></script>
     </body>
 </html>

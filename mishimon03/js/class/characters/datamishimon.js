@@ -10,9 +10,9 @@ class Mishimon {
 
 // 📌 Definición de ataques
 const ataques = {
-    agua: { nombre: '💧 Agua', id: 'boton-agua' },
-    fuego: { nombre: '🔥 Fuego', id: 'boton-fuego' },
-    tierra: { nombre: '🌱 Tierra', id: 'boton-tierra' }
+    agua: { nombre: '💧', id: 'boton-agua' },
+    fuego: { nombre: '🔥', id: 'boton-fuego' },
+    tierra: { nombre: '🌱', id: 'boton-tierra' }
 };
 
 // 📌 Asignación de ataques
