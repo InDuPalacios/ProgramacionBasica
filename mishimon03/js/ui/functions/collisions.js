@@ -1,5 +1,5 @@
 // collisions.js
-import { mostrarVentanaBatalla } from "../../batalla.js";
+import { mostrarVentanaBatalla } from "./interfazBatalla.js";
 import { mishimonJugadorSet, mishimonEnemigoSet } from "./ctrlMishimonGame.js";
 
 let colisionDetectada = false; // Para evitar múltiples activaciones de la ventana emergente

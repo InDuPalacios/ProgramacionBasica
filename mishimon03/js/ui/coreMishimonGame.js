@@ -7,7 +7,12 @@ import {
     sectionVerMapa,
     sectionSeleccionarMascota,
     sectionBtnReiniciar,
-    divAtaquesPosiblesJugador } from "../data/sharedData.js"
+    divAtaquesPosiblesJugador,
+    divAtaquesPosiblesEnemigo,
+    gameState,
+    sectionSeleccionarAtaque } from "../data/sharedData.js"
+
+import { actualizarVidasEnElDOM } from "./functions/interfazBatalla.js";
 
 import { 
     ocultarSecciones,
@@ -39,6 +44,14 @@ function inicializarEventoSeleccionMascota(
     btnMascota, 
     ataquesJugadorDisponibles, 
     mishimones) {
+
+    if (!btnMascota) {
+        console.error("⚠ Error: btnMascota no está definido en el DOM.");
+        return;
+    }
+        
+    console.log("✅ Botón Mascota encontrado, asignando evento...");
+    
     btnMascota.addEventListener("click", () => {
         seleccionarMascotaJugador(
             ataquesJugadorDisponibles, 
@@ -54,24 +67,10 @@ function inicializarEventoReiniciar(btnReiniciar) {
 
 // Función para reiniciar el juego
 function reiniciarJuego() {
-    // ✅ Restablecer variables del juego
-    vidasJugador = 5;
-    vidasEnemigo = 5;
-    rondasJugadas = 0;
-
-    // ✅ Volver a la pantalla de selección sin recargar la página
-    sectionSeleccionarMascota.style.display = "flex";
-    sectionVerMapa.style.display = "none";
-    sectionBtnReiniciar.style.display = "none";
-
-    // ✅ Limpiar ataques anteriores
-    divAtaquesPosiblesJugador.innerHTML = "";
-    document.getElementById("ataques-enemigo").innerHTML = "";
-    document.getElementById("pResultado").innerHTML = "";
-
-    // ✅ Reiniciar Mishimon del jugador
-    mishimonJugador = null;
+    console.log("🔄 Reiniciando el juego...");
+    location.reload(); // 🔄 Recarga la página completamente
 }
+
 
 // 📌 Exportar funciones para usarlas en otros archivos
 export { iniciarJuego, inicializarEventoSeleccionMascota, inicializarEventoReiniciar };

@@ -10,7 +10,7 @@ import { btnProbarOtro,
 
 import { iniciarMapa } from "../../engineGraphic/renderController.js";
 
-import { mostrarBotonesAtaque } from "../../batalla.js";
+import { mostrarBotonesAtaque } from "./interfazBatalla.js";
 
 // 📌  Funciones para manejar el modal
 function mostrarModalSeleccion(mascota) {

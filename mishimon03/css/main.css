@@ -30,6 +30,10 @@ section#sectionSeleccionarMascota{
 
 h1.titulo{
     color: #67729D ;
+    text-align: center;  /* 🔹 Centra el texto */
+    width: 100%;  /* 🔹 Ocupa todo el ancho disponible */
+    display: flex;
+    justify-content: center;  /* 🔹 Asegura el centrado horizontal */
 }
 
 h2.subtitulo{
@@ -37,12 +41,28 @@ h2.subtitulo{
     font-size: 18px;
 }
 
-div.tarjetas, div.class-div-tarjetas-ataques{
+div.tarjetas {
    display: flex;
    flex-wrap: wrap;
    justify-content: center;
    gap: 10px;
 }
+
+div.class-div-batalla{
+    display: flex;          /* 🔹 Activa flexbox */
+    flex-direction: row;    /* 🔹 Asegura disposición horizontal */
+    justify-content: space-around;  /* 🔹 Distribuye los elementos con espacio */
+    align-items: center;    /* 🔹 Alinea verticalmente los elementos */
+    gap: 20px;
+}
+
+div.class-div-tarjetas-ataques{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+ }
 
 .tajeta-de-mishimon{
     background-color: #E7BCDE;
@@ -99,17 +119,23 @@ button#btnMascota{
 }
 
 section#sectionSeleccionarAtaque{
-    position: fixed; /* Para que flote sobre todo */
+    position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Centrar en pantalla */
-    width: 80%; /* Ancho del modal */
-    max-width: 600px; /* Máximo ancho */
+    transform: translate(-50%, -50%);
+    width: min(90vw, 1000px); /* 🔹 Se adapta a la pantalla sin superar 1000px */
+    height: auto; /* 🔹 La altura se ajusta automáticamente al contenido */
+    max-height: 85vh; /* 🔹 Evita que sea más alto que el 85% de la pantalla */
     background: white;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    padding: 20px;
-    z-index: 1000; /* Asegura que esté por encima del mapa */
+    border-radius: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    padding: 2vw;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* 🔹 Centra el contenido verticalmente */
+    overflow: hidden; /* 🔹 Evita el scroll */
 }
 
 
@@ -138,18 +164,55 @@ section#sectionSeleccionarAtaque{
     font-family: 'Fira Sans Condensed', sans-serif;
 }
 
+.boton-de-ataque:hover {
+    background-color: #BB9CC0;
+
+}
+
+/* Estilos para cuando el botón ha sido usado */
+.boton-de-ataque.boton-deshabilitado {
+    background-color: #cacaca !important; /* 🔹 Color gris oscuro */
+    color: #ffffff !important; /* 🔹 Texto blanco */
+    cursor: not-allowed;
+    border: 1px solid #666 !important;
+    opacity: 0.6;
+    filter: grayscale(100%); /* 🔹 Se ve más apagado */
+    pointer-events: none; /* 🔹 Evita clics */
+}
+
 div#divMensajes{
-    width: 330px;
-    color: #67729D;
     background-color: #E7BCDE;
-    padding: 20px;
-    margin-top: 20px;
-    box-sizing: border-box;
-    border-radius: 20px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    text-align: center;
+    width: 180px;
+    min-height: 60px;
     display: flex;
-    justify-content: center;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+}
+
+#pResultado {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #E7BCDE;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* 🔹 Contenedor del historial de rondas */
+.historial-rondas-container {
+    background: rgba(231, 188, 222, 0.3); /* Fondo semi-transparente */
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* 🔹 Estilos para cada ronda */
+.historial-ronda {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Separación visual */
 }
 
 button#btnReiniciar{
@@ -163,25 +226,50 @@ button#btnReiniciar{
     font-family: 'Fira Sans Condensed', sans-serif;
 }
 
-div#divAreaAtaques {
+div#divAtaquesDisponiblesEnemigo {
     display: flex;
     justify-content: center;
     gap: 20px; /* Espaciado entre los dos contenedores */
     flex-wrap: wrap; /* Permite que los elementos se apilen si la pantalla es pequeña */
 }
 
+div#divAreaAtaques {
+    display: flex;
+    flex-direction: row; /* 🔹 Los elementos estarán en fila */
+    justify-content: center; /* 🔹 Centra los elementos horizontalmente */
+    align-items: center; /* 🔹 Alinea verticalmente */
+    gap: 20px; /* 🔹 Espaciado entre los elementos */
+    position: relative; /* 🔹 Permite posicionar elementos dentro */
+}
 .class-div-ataques-jugador, .class-div-ataques-enemigo {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #BB9CC0;
     color: #67729D;
-    padding: 10px;
     box-sizing: border-box;
     margin: 20px;
     border-radius: 15px;
     min-height: 250px; /* 🔹 Asegura que ambos tengan la misma altura */
     width: 180px; /* 🔹 Define un ancho fijo */
+}
+
+div#divAtaquesPosiblesJugador, div#divAtaquesPosiblesEnemigo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 100%; /* 🔹 Ajuste de ancho para alineación */
+}
+
+div#divAtaquesDisponiblesEnemigo {
+    display: flex;
+    flex-direction: column; /* 🔹 Fuerza la disposición vertical */
+    align-items: center; /* 🔹 Centra los ataques en el eje horizontal */
+    justify-content: start; /* 🔹 Asegura que los ataques comiencen desde arriba */
+    width: auto; /* 🔹 Ajusta automáticamente el ancho */
+    min-width: 150px; /* 🔹 Evita que se encoja demasiado */
+    max-width: 200px; /* 🔹 Evita que se expanda demasiado */
 }
 
 p#pAvatarMascotaJugador, p#pAvatarMascotaEnemigo {

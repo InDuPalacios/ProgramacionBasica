@@ -6,12 +6,18 @@ export let mishimonEnemigoSet = {};
 export let ataquesJugador = [];
 export let ataquesJugadorDisponibles = [] 
 export let ataquesEnemigoDisponibles = [];
-export let ataqueSeleccionadoJugador = "";
 export let ataqueEnemigo = "";
 export let rondasJugadas = 0;
 
 export const estadoBatalla = {
     ataqueSeleccionadoEnemigo: "",
+    ataqueSeleccionadoJugador: "",
+};
+
+export const gameState = {
+    rondasJugadas: 0,
+    vidasJugador: 5,
+    vidasEnemigo: 5 
 };
 
 export const canvasData = {
@@ -60,7 +66,9 @@ export const sectionConfirmSelection = document.getElementById("sectionConfirmSe
 export const divTarjetas = document.getElementById('divTarjetas');
 export const divAtaquesDisponiblesEnemigo = document.getElementById("divAtaquesDisponiblesEnemigo");
 export const divAtaquesPosiblesJugador = document.getElementById("divAtaquesPosiblesJugador")
+export let divAtaquesPosiblesEnemigo = document.getElementById("divAtaquesPosiblesEnemigo");
 export let divAreaTarjetasAtaques = document.getElementById("divAreaTarjetasAtaques");
+export let divMensajes = document.getElementById("divMensajes");
 export const btnMascota = document.getElementById("btnMascota");
 export const btnProbarOtro = document.getElementById("btnProbarOtro")
 export const btnConfirmarSeleccion = document.getElementById("btnConfirmarSeleccion")
@@ -72,5 +80,6 @@ export const modal = document.getElementById("sectionConfirmSelection");
 export const infoMascota = document.getElementById("infoMascotaSeleccionada");
 export const canvasMapa = document.getElementById("canvasMapa");
 export const modalOverlay = document.getElementById("modalOverlay");
+export let pResultado = document.getElementById("pResultado");
 
 

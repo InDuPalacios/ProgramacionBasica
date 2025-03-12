@@ -14,9 +14,6 @@ import {
     btnConfirmarSeleccion,
     ataqueEnemigo } from "../../data/sharedData.js"
 
-import { mostrarBotonesAtaque,
-    actualizarInterfazAtaquesEnemigo } from "../../batalla.js";
-
 import { aleatorio } from "../../class/mechanics/iaEnemy.js"
 
 import { 
@@ -150,11 +147,15 @@ function seleccionarMascotaEnemigo() {
         // Limpiar antes de agregar nuevos botones
         contenedorAtaquesEnemigo.innerHTML = `<h2 class="subtitulo">Ataques del Enemigo:</h2>`;
     
-        ataquesEnemigoDisponibles.forEach(ataque => {
+        ataquesEnemigoDisponibles.forEach((ataque, index) => { 
             let ataqueElemento = document.createElement("button");
             ataqueElemento.innerText = ataque.nombre;
             ataqueElemento.classList.add("boton-de-ataque");
-    
+        
+            // ✅ Asignamos correctamente el índice
+            ataqueElemento.setAttribute("data-id", index);
+            console.log(`📌 Asignando índice ${index} al ataque: ${ataque.nombre}`);
+        
             contenedorAtaquesEnemigo.appendChild(ataqueElemento);
         });
 
@@ -162,33 +163,27 @@ function seleccionarMascotaEnemigo() {
 }
 
 function ataqueAleatorioEnemigo() {
-    console.log("📌 Antes de seleccionar ataque enemigo:", ataquesEnemigoDisponibles.map(a => a.nombre));
+    console.log("📌 Antes de seleccionar ataque enemigo:", 
+        ataquesEnemigoDisponibles.map(a => a.nombre));
 
     if (!ataquesEnemigoDisponibles || ataquesEnemigoDisponibles.length === 0) {
-        estadoBatalla.ataqueSeleccionadoEnemigo = "Sin ataque"; // ✅ AHORA SÍ SE PUEDE MODIFICAR
-        return estadoBatalla.ataqueSeleccionadoEnemigo;
+        console.error("⚠ Error: No hay ataques disponibles para el enemigo.");
+        return "❌ Sin ataque";
     }
 
-    // 🔥 Generar índice aleatorio
     let ataqueIndex = Math.floor(Math.random() * ataquesEnemigoDisponibles.length);
-    console.log(`🎯 Índice seleccionado: ${ataqueIndex}, Total ataques disponibles: ${ataquesEnemigoDisponibles.length}`);
-
-
-    // 🚀 Seleccionar ataque
     let ataqueSeleccionado = ataquesEnemigoDisponibles.splice(ataqueIndex, 1)[0];
-    console.log("🔍 Ataque seleccionado:", ataqueSeleccionado);
 
     if (!ataqueSeleccionado || !ataqueSeleccionado.nombre) {
         console.error("⚠ Error: No se pudo seleccionar un ataque enemigo.");
-        estadoBatalla.ataqueSeleccionadoEnemigo = "Sin ataque";
-        return estadoBatalla.ataqueSeleccionadoEnemigo;
+        return "❌ Sin ataque";
     }
 
     estadoBatalla.ataqueSeleccionadoEnemigo = ataqueSeleccionado.nombre;
 
     // 📌 Logs para depuración
-    console.log(`👾 El enemigo usó: ${estadoBatalla.ataqueSeleccionadoEnemigo}`);
-    return estadoBatalla.ataqueSeleccionadoEnemigo;
+    console.log(`👾 El enemigo usó: ${ataqueSeleccionado.nombre}`);
+    return ataqueSeleccionado.nombre;
 }
 
 

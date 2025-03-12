@@ -53,32 +53,33 @@
             </div>
         </section>
         <section id="sectionSeleccionarAtaque">
+            <button id="btnCerrarBatalla">❌</button>
             <h1 class="titulo">¡ EMPIEZA LA BATALLA !</h1>
-            <h2  class="subtitulo">Estos son tus ataques:</h2>
-            <div id="divAreaTarjetasAtaques" class="class-div-tarjetas-ataques">
-            </div>
-            <div id="divMensajes">
-                <p id="pResultado">Elige un ataque</p>
-                <section id="sectionBtnReiniciar">
-                    <button id="btnReiniciar">Reiniciar</button>
-                </section>
-            </div>
-            <div id="divAreaAtaques">
+            <div id="divAreaBatalla" class="class-div-batalla">
+                <div id="divAreaTarjetasAtaques" class="class-div-tarjetas-ataques">
+                </div>
+                <div id="divAreaAtaques">
                 <div class="class-div-ataques-jugador">
                     <p id="pAvatarMascotaJugador"></p>
                     <p id="pContadorVidasJugador">5</p>
                     <div id="divAtaquesPosiblesJugador"></div>
+                </div>
+                <div id="divMensajes">
+                    <p id="pResultado">Elige un ataque</p>
+                    <section id="sectionBtnReiniciar">
+                        <button id="btnReiniciar">Reiniciar</button>
+                    </section>
                 </div>
                 <div class="class-div-ataques-enemigo">
                     <p id="pAvatarMascotaEnemigo"></p>
                     <p id="pContadorVidasEnemigo">5</p>
                     <div id="divAtaquesPosiblesEnemigo"></div>
                 </div>
-            </div>
-            <div id="divAtaquesDisponiblesEnemigo">
+                </div>
+                <div id="divAtaquesDisponiblesEnemigo">
                 <h2 class="subtitulo">Ataques del Enemigo:</h2>
+                </div>
             </div>
-            <button id="btnCerrarBatalla">❌</button>
         </section>
         <script type="module" src="./js/main.js"></script>
     </body>
