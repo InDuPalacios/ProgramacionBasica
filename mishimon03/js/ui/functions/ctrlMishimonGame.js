@@ -11,6 +11,7 @@ import {
     mishimonEnemigoSet,
     ataquesEnemigoDisponibles,
     estadoBatalla,
+    gameState,
     btnConfirmarSeleccion,
     ataqueEnemigo } from "../../data/sharedData.js"
 
@@ -74,6 +75,20 @@ function asignarMishimonJugador(mishimon) {
     mishimonJugadorSet.ataques = [...mishimon.ataques]
 
     console.log("✅ MishimonJugadorSet asignado correctamente:", mishimonJugadorSet);
+
+    seleccionarMishimonToBack(mishimonJugadorSet)
+}
+
+function seleccionarMishimonToBack(mishimonJugadorSet){
+    fetch(`http://localhost:8080/mishimon03/${gameState.jugadorId}`, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            mishimon: mishimonJugadorSet.nombre
+        })
+    })
 }
 
 // Seteo del Enemigo

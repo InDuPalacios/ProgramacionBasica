@@ -1,7 +1,8 @@
 // 📌  pintarPersonajes.js - 
 import { 
     canvasData, 
-    canvasMapa } from "../../data/sharedData.js";
+    canvasMapa,
+    gameState } from "../../data/sharedData.js";
 
     import { 
         mishimonJugadorSet, 
@@ -45,6 +46,21 @@ function pintarMishimones() {
      else {
         console.warn("⚠ ⚠ No hay enemigo seleccionado o su imagen no ha cargado");
     }
+
+    enviarPosicionBE(mishimonJugadorSet.x, mishimonJugadorSet.y);
+}
+
+function enviarPosicionBE(x,y){
+    fetch(`http://localhost:8080/mishimon03/${gameState.jugadorId}/posicion`,{
+        method: "post",
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+            x,
+            y
+        })
+    })
 }
 
 export { pintarMishimones };

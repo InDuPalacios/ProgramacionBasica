@@ -17,7 +17,8 @@ export const estadoBatalla = {
 export const gameState = {
     rondasJugadas: 0,
     vidasJugador: 5,
-    vidasEnemigo: 5 
+    vidasEnemigo: 5,
+    jugadorId: null,
 };
 
 export const canvasData = {

@@ -38,6 +38,23 @@ function iniciarJuego() {
         mishimones);
 
     inicializarEventoReiniciar(btnReiniciar);
+
+    unirseAlJuego();
+}
+
+function unirseAlJuego(){
+    fetch("http://localhost:8080/unirse").then(
+        function(res){
+            if (res.ok){
+                res.text().then(
+                    function(respuesta){
+                        console.log(respuesta)
+                        gameState.jugadorId = respuesta
+                    }
+                )
+            }
+        }
+    )
 }
 
 function inicializarEventoSeleccionMascota(
