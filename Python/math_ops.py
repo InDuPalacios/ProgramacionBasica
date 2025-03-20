@@ -8,7 +8,7 @@ print("Substraction:", a - b)
 print("Multiplication:", a * b)
 print("Division:", a / b)
 
-print("Moduls:", a % b)
+print("Modulus:", a % b)
 print("Quotient:", a // b)
 # Double division (//) returns the integer part of the division
 print("Exponent:", a ** b)
