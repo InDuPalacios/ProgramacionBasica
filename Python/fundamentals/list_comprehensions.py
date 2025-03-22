@@ -14,13 +14,13 @@ print("Even numbers:", evens)
 
 # 📌 Matrix Transposition using List Comprehension
 matrix = [
-    [1, 2, 3],
+    [1, 2, 3, 4],
     [4, 5, 6],
-    [7, 8, 9]
+    [7, 8, 9, 6, 7]
 ]
 
 # Transpose the matrix (rows → columns)
-transposed = [[row[i] for row in matrix] for i in range(len(matrix[0]))]
+transposed = [[row[i] for row in matrix] for i in range(len(matrix[2]))]
 print("Original Matrix:", matrix)
 print("Transposed Matrix:", transposed)
 
