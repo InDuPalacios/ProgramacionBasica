@@ -29,6 +29,7 @@ class Employee:
             f"and I earn {self.salary}."
         )
 
+
 if __name__ == "__main__":
     # Function test
     print(add_employee_ids(201, 202))

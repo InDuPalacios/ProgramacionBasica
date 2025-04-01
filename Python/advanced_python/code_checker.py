@@ -1,6 +1,16 @@
-import subprocess
+"""
+Code Checker Script
 
-# Function to run a formatter/linter in check mode and ask to apply changes if needed
+This script runs formatting and static analysis tools
+(Black, Isort, Pylint, Mypy, Flake8)on a given Python
+file and reports or applies fixes interactively.
+"""
+
+import subprocess
+import sys
+
+
+# Run formatter/linter in check mode and apply if needed
 def ask_and_run(command, label):
     """
     Runs a tool in '--check --diff' mode and optionally applies changes.
@@ -10,13 +20,17 @@ def ask_and_run(command, label):
         label (str): A label to identify the tool in messages.
     """
     print(f"\n🔍 {label}")
-    show_result = subprocess.run(command + ["--check", "--diff"])
+    show_result = subprocess.run(command + ["--check", "--diff"], check=False)
 
     # If the tool suggests changes, ask the user whether to apply them
     if show_result.returncode != 0:
-        confirm = input(f"\n¿Apply changes suggested by {label}? (y/n): ").strip().lower()
+        confirm = (
+            input(f"\n¿Apply changes suggested by {label}? (y/n): ")
+            .strip()
+            .lower()
+        )
         if confirm == "y":
-            subprocess.run(command)
+            subprocess.run(command, check=False)
             print(f"✅ Changes applied by {label}.")
         else:
             print(f"❌ Changes from {label} were not applied.")
@@ -39,7 +53,8 @@ def run_simple_check(command, label):
         shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        text=True
+        text=True,
+        check=False,
     )
 
     output = result.stdout.strip()
@@ -53,8 +68,12 @@ def run_simple_check(command, label):
 
 # Main program entry
 if __name__ == "__main__":
-     # You can change the target to "." to scan the entire project
-    target = "anotations.py"
+    if len(sys.argv) < 2:
+        print("⚠️  Please provide the file to check.")
+        print("Usage: python code_checker.py <file.py>")
+        sys.exit(1)
+
+    target = sys.argv[1]
 
     # Step 1: Run Black for formatting
     ask_and_run(["black", target], "Black (formatting)")
