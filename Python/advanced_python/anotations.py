@@ -14,9 +14,9 @@ class Employee:
 
     name: str
     age: int
-    salary: int
+    salary: float
 
-    def __init__(self, name: str, age: int, salary: int):
+    def __init__(self, name: str, age: int, salary: float):
         """Initialize employee attributes."""
         self.name = name
         self.age = age
@@ -35,5 +35,5 @@ if __name__ == "__main__":
     print(add_employee_ids(201, 202))
 
     # Class test
-    employee = Employee("Ana", 30, 2000)
-    print(employee.introduce())
+    employee1 = Employee("Ana", 30, 2000.0)
+    print(employee1.introduce())
